@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Federico Cesarini - Cloud Architect & AI Solutions Engineer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent-primary: #00d4ff;
+            --accent-secondary: #ff6b6b;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.98);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 2rem;
+            border: 4px solid var(--accent-primary);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-primary);
+            border: 2px solid var(--accent-primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-category {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--bg-tertiary);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+        }
+
+        .skill-category h3 {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .skill-category li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+        }
+
+        /* Experience Section */
+        .experience-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .experience-item {
+            position: relative;
+            margin-bottom: 3rem;
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--bg-tertiary);
+            transition: transform 0.3s ease;
+        }
+
+        .experience-item:hover {
+            transform: translateX(10px);
+            border-color: var(--accent-primary);
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 2rem;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            border: 3px solid var(--bg-primary);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .experience-title {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-company {
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .experience-period {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        .experience-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .experience-achievements {
+            list-style: none;
+        }
+
+        .experience-achievements li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .experience-achievements li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+            font-weight: bold;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--bg-tertiary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .contact-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--accent-primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--bg-tertiary);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-timeline {
+                padding-left: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Mobile menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                padding: 2rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active {
+                display: flex;
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">FC</div>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <img src="/home/federico/Downloads/1742824917112.jpeg" alt="Federico Cesarini" class="profile-image">
+            <h1>Federico Cesarini</h1>
+            <h2>AI Solutions Engineer</h2>
+            <p>Passionate about building scalable cloud infrastructure and innovative AI solutions. Specialized in Elasticsearch, NLP, and generative AI technologies.</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                <a href="#projects" class="btn btn-secondary">View Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>I'm a Cloud Architect and AI Solutions Engineer with a proven track record of optimizing cloud infrastructure and implementing cutting-edge AI solutions. Currently working at Tinexta Innovation Hub, I specialize in Elasticsearch, NLP, and generative AI technologies.</p>
+                <p>My expertise spans from architecting Kubernetes pipelines to developing RAG systems for legal and patent data analysis. I'm passionate about mentoring junior developers and driving innovation through technology.</p>
+                <p>With a background in Computer Engineering from Università degli studi di Bergamo, I bring both theoretical knowledge and practical experience to every project.</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3><i class="fas fa-cloud"></i> Cloud & Infrastructure</h3>
+                    <ul>
+                        <li>Google Cloud Platform (GCP)</li>
+                        <li>Kubernetes (GKE) & Autoscaling</li>
+                        <li>Cloud Functions & App Engine</li>
+                        <li>Infrastructure Optimization</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-search"></i> Search & Data</h3>
+                    <ul>
+                        <li>Elasticsearch Cluster Management</li>
+                        <li>Vector Search & Hybrid Queries</li>
+                        <li>ML Model Deployment (Eland)</li>
+                        <li>ES Rally Benchmarking</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-brain"></i> AI & NLP</h3>
+                    <ul>
+                        <li>Retrieval-Augmented Generation</li>
+                        <li>Named Entity Recognition</li>
+                        <li>GPT & Gemini API Integration</li>
+                        <li>Text Vectorization</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-code"></i> Development</h3>
+                    <ul>
+                        <li>Python, Django, FastAPI</li>
+                        <li>Celery, RabbitMQ, Redis</li>
+                        <li>Prometheus, Grafana</li>
+                        <li>Linux, Bash, MacOS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+        <h2>Professional Experience</h2>
+        <div class="experience-timeline">
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="experience-title">Cloud Architect and AI Solutions Engineer</div>
+                        <div class="experience-company">Tinexta Innovation Hub</div>
+                    </div>
+                    <div class="experience-period">Feb 2025 - Present</div>
+                </div>
+                <ul class="experience-achievements">
+                    <li>Architected Kubernetes ingestion pipeline for LextelAI using KEDA for autoscaling, increasing speed performance by 100%</li>
+                    <li>Implemented Celery into Kubernetes pipeline enabling parallel processing of vast data volumes</li>
+                    <li>Developed and deployed generative AI solutions for legal and patent data analysis</li>
+                    <li>Created and optimized RAG pipelines for improved information retrieval from legal documents</li>
+                    <li>Led Elasticsearch cluster operations and engineered queries to improve retrieval performance</li>
+                    <li>Deployed ML models to Elasticsearch using Eland</li>
+                    <li>Executed and analyzed LextelAI benchmarks on production Elasticsearch clusters using ES Rally</li>
+                    <li>Mentored junior developers, accelerating their onboarding process</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="experience-title">Software Engineer and Cloud Architect</div>
+                        <div class="experience-company">Warrant Hub</div>
+                    </div>
+                    <div class="experience-period">Dec 2021 - Feb 2025</div>
+                </div>
+                <ul class="experience-achievements">
+                    <li>Developed Google Cloud Platform infrastructure solutions for scalable data processing</li>
+                    <li>Trained NER models for material information extraction from patent data, achieving 85% accuracy</li>
+                    <li>Created NLP text ingestion solutions for processing unstructured patent information</li>
+                    <li>Designed and implemented Elasticsearch text and vector databases for efficient information retrieval</li>
+                    <li>Built Django backend systems for data processing applications</li>
+                    <li>Created Kubernetes pipelines for automated data processing workflows</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="experience-title">Software Developer</div>
+                        <div class="experience-company">GestApp srl</div>
+                    </div>
+                    <div class="experience-period">Jun 2020 - Oct 2020</div>
+                </div>
+                <ul class="experience-achievements">
+                    <li>Developed backend solutions using C# and VB.NET</li>
+                    <li>Created and maintained business logic components for enterprise applications</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <h2>Key Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3 class="project-title">linkAIin - LinkedIn AI Auto-Poster</h3>
+                <p class="project-description">Python-powered Google Cloud Function that automatically generates and posts engaging content to LinkedIn using AI, with web research capabilities and modular engagement analysis.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Google Cloud Functions</span>
+                    <span class="tech-tag">OpenAI GPT</span>
+                    <span class="tech-tag">DALL-E</span>
+                    <span class="tech-tag">LinkedIn API</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3 class="project-title">Elasticsearch Natural Language Query Solution</h3>
+                <p class="project-description">Infrastructure using GPT API that translates natural language queries into Elasticsearch queries, utilizing index mapping as context for intelligent query generation.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Elasticsearch</span>
+                    <span class="tech-tag">GPT API</span>
+                    <span class="tech-tag">NLP</span>
+                    <span class="tech-tag">Python</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3 class="project-title">Embeddings Creation Kubernetes Pipeline</h3>
+                <p class="project-description">GKE pipeline for lextel.ai with autoscaling capabilities, implementing chunking, vectorizing, and indexing of large text volumes for RAG applications with comprehensive monitoring.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Kubernetes</span>
+                    <span class="tech-tag">Celery</span>
+                    <span class="tech-tag">RabbitMQ</span>
+                    <span class="tech-tag">Redis</span>
+                    <span class="tech-tag">Grafana</span>
+                    <span class="tech-tag">Prometheus</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3 class="project-title">NER Material and Components Model</h3>
+                <p class="project-description">Trained spaCy NER model to autonomously extract materials and components from technical texts with high precision in identifying complex material compositions.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">spaCy</span>
+                    <span class="tech-tag">NER</span>
+                    <span class="tech-tag">Machine Learning</span>
+                    <span class="tech-tag">Python</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3 class="project-title">GCP Data Ingestion Pipeline</h3>
+                <p class="project-description">Multi-step pipeline using Cloud Functions, trigger buckets, VMs, Datastores, and Cloud Run to process unformatted PDF data and populate NoSQL databases.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Google Cloud Platform</span>
+                    <span class="tech-tag">Cloud Functions</span>
+                    <span class="tech-tag">Cloud Run</span>
+                    <span class="tech-tag">App Engine</span>
+                    <span class="tech-tag">NoSQL</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3 class="project-title">Italian Cuisine Recipes RAG Chatbot</h3>
+                <p class="project-description">Personal project that scraped and vectorized Italian recipe information, built chatbot using RAG techniques for contextually relevant cooking assistance.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">RAG</span>
+                    <span class="tech-tag">Vector Search</span>
+                    <span class="tech-tag">Generative AI</span>
+                    <span class="tech-tag">Python</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <h2>Get In Touch</h2>
+        <div class="contact-content">
+            <p>I'm always interested in discussing new opportunities, innovative projects, or just having a chat about the latest in AI and cloud technologies.</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <a href="mailto:mail.fede.cesarini@gmail.com" class="contact-link">mail.fede.cesarini@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <a href="tel:+393920891327" class="contact-link">+39 392 089 1327</a>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <a href="#" class="contact-link">LinkedIn Profile</a>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <a href="#" class="contact-link">GitHub Profile</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Federico Cesarini. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                // Close mobile menu if open
+                document.getElementById('nav-links').classList.remove('active');
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-on-scroll');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section, .experience-item, .project-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add some interactive effects
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-10px) scale(1)';
+            });
+        });
+
+        // Add typing effect to hero text
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typing effect when page loads
+        window.addEventListener('load', () => {
+            const heroTitle = document.querySelector('.hero h1');
+            const originalText = heroTitle.textContent;
+            heroTitle.textContent = '';
+            setTimeout(() => {
+                typeWriter(heroTitle, originalText, 100);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
