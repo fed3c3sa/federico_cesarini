@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barrios Barbershop – Milano</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+      background: #0a0a0a;
+      color: #f0ede8;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── VARIABLES ─── */
+    :root {
+      --black:      #0a0a0a;
+      --dark:       #121212;
+      --dark2:      #1a1a1a;
+      --dark3:      #222222;
+      --gold:       #c9a84c;
+      --gold-l:     #e4c97a;
+      --gold-d:     #8a6f2e;
+      --cream:      #f0ede8;
+      --muted:      #8a8178;
+      --muted-l:    #b0a89e;
+      --border-g:   rgba(201,168,76,0.18);
+      --trans:      all 0.3s ease;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-d); border-radius: 2px; }
+
+    /* ─── UTILITIES ─── */
+    .gold-line {
+      display: block; width: 50px; height: 1px;
+      background: var(--gold); margin: 1.25rem 0;
+    }
+    .gold-line.center { margin: 1.25rem auto; }
+    .label {
+      font-size: 0.68rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 5%;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-g);
+      transition: padding 0.4s ease;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.35rem; font-weight: 400;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .nav-logo span { font-style: italic; font-weight: 300; }
+    .nav-links {
+      display: flex; align-items: center; gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.72rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted-l);
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-book {
+      padding: 0.6rem 1.6rem;
+      background: var(--gold); color: var(--black);
+      font-size: 0.68rem; letter-spacing: 0.2em; font-weight: 600;
+      text-transform: uppercase; transition: background 0.25s;
+    }
+    .nav-book:hover { background: var(--gold-l); }
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; background: none; border: none;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 1.5px;
+      background: var(--gold); transition: var(--trans);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    /* Mobile menu overlay */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; top: 68px; z-index: 199;
+      background: rgba(10,10,10,0.98); backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+      list-style: none;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 300; letter-spacing: 0.1em;
+      color: var(--cream); transition: color 0.25s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-menu .m-book {
+      margin-top: 1rem; padding: 1rem 3rem;
+      background: var(--gold); color: var(--black);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.2em; font-weight: 600; text-transform: uppercase;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative; height: 100vh; min-height: 620px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    /* Layered background: dark texture + gold gradient */
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(160deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.9) 100%),
+        radial-gradient(ellipse 80% 80% at 60% 40%, #1e1408 0%, #0a0a0a 70%);
+    }
+    /* Decorative geometric rings */
+    .hero-ring {
+      position: absolute; border-radius: 50%;
+      border: 1px solid var(--border-g);
+      pointer-events: none;
+    }
+    .hero-ring-1 { width: 700px; height: 700px; top: -200px; right: -180px; }
+    .hero-ring-2 { width: 400px; height: 400px; bottom: -100px; left: -80px; }
+    .hero-ring-3 { width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(2.5); opacity: 0.4; }
+    /* Vertical gold accent lines */
+    .hero-vline {
+      position: absolute; top: 0; bottom: 0; width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--border-g) 30%, var(--border-g) 70%, transparent);
+      pointer-events: none;
+    }
+    .hero-vline-l { left: 5%; }
+    .hero-vline-r { right: 5%; }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 0 1.5rem;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; display: block; width: 36px; height: 1px; background: var(--gold);
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(3.2rem, 9vw, 8rem);
+      font-weight: 300; line-height: 1.0;
+      letter-spacing: 0.06em;
+      color: var(--cream);
+      margin-bottom: 0.2em;
+    }
+    .hero h1 em {
+      display: block; font-style: italic; font-weight: 300;
+      color: var(--gold); letter-spacing: 0.1em;
+    }
+    .hero-subtitle {
+      font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--muted); margin-top: 1.5rem; margin-bottom: 2.5rem;
+    }
+    .hero-divider {
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .hero-divider span { width: 60px; height: 1px; background: var(--gold); opacity: 0.6; }
+    /* SVG scissors icon in divider */
+    .hero-divider svg { width: 20px; height: 20px; color: var(--gold); }
+    .hero-cta {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.5rem; flex-wrap: wrap;
+    }
+    .btn-gold {
+      display: inline-block; padding: 1rem 2.8rem;
+      background: var(--gold); color: var(--black);
+      font-size: 0.72rem; letter-spacing: 0.22em; font-weight: 600; text-transform: uppercase;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-gold:hover { background: var(--gold-l); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-block; padding: 1rem 2.8rem;
+      border: 1px solid rgba(201,168,76,0.5); color: var(--gold);
+      font-size: 0.72rem; letter-spacing: 0.22em; font-weight: 500; text-transform: uppercase;
+      transition: border-color 0.3s, background 0.3s, transform 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); transform: translateY(-2px); }
+    /* Scroll cue */
+    .scroll-cue {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      opacity: 0.45;
+    }
+    .scroll-cue span { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; }
+    .scroll-arrow {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+    /* ─── STRIP: KEY NUMBERS ─── */
+    .strip {
+      background: var(--dark);
+      border-top: 1px solid var(--border-g);
+      border-bottom: 1px solid var(--border-g);
+      padding: 3rem 5%;
+    }
+    .strip-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border-g);
+    }
+    .strip-item {
+      background: var(--dark);
+      padding: 2.5rem 2rem; text-align: center;
+    }
+    .strip-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 300;
+      color: var(--gold); line-height: 1;
+    }
+    .strip-label {
+      font-size: 0.68rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--muted); margin-top: 0.5rem;
+    }
+
+    /* ─── ABOUT (split: text + photo) ─── */
+    .about-section { padding: 7rem 5%; background: var(--black); }
+    .about-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+    .about-media {
+      position: relative;
+    }
+    .about-photo-wrap {
+      position: relative; aspect-ratio: 3/4; overflow: hidden;
+    }
+    .about-photo-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(20%) contrast(1.05);
+      transition: filter 0.6s ease;
+    }
+    .about-photo-wrap:hover img { filter: grayscale(0%) contrast(1.08); }
+    /* Gold frame offset */
+    .about-frame {
+      position: absolute; inset: -14px;
+      border: 1px solid var(--border-g);
+      pointer-events: none; z-index: -1;
+    }
+    /* Year badge */
+    .about-badge {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--gold); color: var(--black);
+      padding: 1.4rem 1.8rem; text-align: center;
+    }
+    .about-badge-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 600; line-height: 1;
+    }
+    .about-badge-text {
+      font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+      font-weight: 600; margin-top: 0.2rem;
+    }
+    .about-text .label { margin-bottom: 0.5rem; }
+    .about-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.2;
+    }
+    .about-text h2 em { color: var(--gold); font-style: italic; }
+    .about-text p {
+      color: var(--muted-l); font-size: 0.95rem; line-height: 1.9;
+      margin-top: 1.4rem;
+    }
+    .about-features {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.2rem; margin-top: 2.5rem;
+    }
+    .about-feature {
+      display: flex; align-items: flex-start; gap: 0.8rem;
+    }
+    .af-icon {
+      width: 18px; height: 18px; color: var(--gold); flex-shrink: 0; margin-top: 2px;
+    }
+    .af-text { font-size: 0.82rem; color: var(--muted-l); line-height: 1.5; }
+    .af-title { color: var(--cream); font-weight: 500; font-size: 0.85rem; }
+
+    /* ─── SERVICES ─── */
+    .services-section { padding: 7rem 5%; background: var(--dark); }
+    .services-header { text-align: center; max-width: 560px; margin: 0 auto 4.5rem; }
+    .services-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 300; line-height: 1.2;
+    }
+    .services-header h2 em { color: var(--gold); font-style: italic; }
+    .services-header p { color: var(--muted); font-size: 0.88rem; line-height: 1.8; margin-top: 1rem; }
+    .services-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border-g);
+    }
+    .service-card {
+      background: var(--dark); padding: 3rem 2.5rem;
+      transition: background 0.35s;
+      cursor: default;
+    }
+    .service-card:hover { background: #1c1408; }
+    .service-icon { width: 44px; height: 44px; color: var(--gold); margin-bottom: 1.6rem; }
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 400; margin-bottom: 0.75rem; color: var(--cream);
+    }
+    .service-desc { color: var(--muted); font-size: 0.84rem; line-height: 1.8; margin-bottom: 1.8rem; }
+    .service-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 300; color: var(--gold);
+    }
+    .service-price span { font-family: 'Inter', sans-serif; font-size: 0.75rem; color: var(--muted); margin-left: 0.3rem; }
+
+    /* ─── GALLERY STRIP (embedded mid-page) ─── */
+    .gallery-section { background: var(--black); padding: 7rem 5%; }
+    .gallery-header { text-align: center; max-width: 600px; margin: 0 auto 4rem; }
+    .gallery-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 300; line-height: 1.2;
+    }
+    .gallery-header h2 em { color: var(--gold); font-style: italic; }
+    /* Masonry-like grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+      grid-template-rows: 280px 280px;
+      gap: 6px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .gallery-cell {
+      position: relative; overflow: hidden; cursor: pointer;
+      background: var(--dark2);
+    }
+    .gallery-cell.tall { grid-row: span 2; }
+    .gallery-cell img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(35%) brightness(0.85);
+      transition: filter 0.6s ease, transform 0.6s ease;
+    }
+    .gallery-cell:hover img {
+      filter: grayscale(0%) brightness(0.95);
+      transform: scale(1.04);
+    }
+    /* Placeholder for cells without real photos */
+    .g-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .g-placeholder svg { width: 40px; height: 40px; color: var(--border-g); }
+    .g-p1 { background: linear-gradient(145deg, #1a120a, #0f0b08); }
+    .g-p2 { background: linear-gradient(145deg, #0f120f, #0a0f0a); }
+    .g-p3 { background: linear-gradient(145deg, #12100a, #0a0a08); }
+    .g-p4 { background: linear-gradient(145deg, #1a1212, #0f0808); }
+    .g-p5 { background: linear-gradient(145deg, #0a0f12, #080a0f); }
+    /* Overlay on hover */
+    .cell-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,8,4,0.65) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .gallery-cell:hover .cell-overlay { opacity: 1; }
+    .cell-label {
+      position: absolute; bottom: 1.2rem; left: 1.2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem; letter-spacing: 0.15em; color: var(--cream);
+      opacity: 0; transition: opacity 0.4s; text-transform: uppercase;
+    }
+    .gallery-cell:hover .cell-label { opacity: 0.85; }
+
+    /* ─── FEATURE SPLIT: photo-left, text-right ─── */
+    .feature-section {
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: var(--dark);
+    }
+    .fs-visual {
+      position: relative; overflow: hidden; min-height: 500px;
+    }
+    .fs-visual img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(25%); transition: filter 0.6s;
+    }
+    .fs-visual:hover img { filter: grayscale(0%); }
+    .fs-visual-placeholder {
+      width: 100%; height: 100%; min-height: 500px;
+      background: linear-gradient(160deg, #1a1008 0%, #0d0d0d 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    /* Pattern overlay for placeholder */
+    .fs-visual-pattern {
+      position: absolute; inset: 0; opacity: 0.06;
+      background-image:
+        repeating-linear-gradient(0deg, var(--gold), var(--gold) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(90deg, var(--gold), var(--gold) 1px, transparent 1px, transparent 40px);
+    }
+    .fs-mark {
+      position: relative; z-index: 1; text-align: center;
+    }
+    .fs-mark svg { width: 60px; height: 60px; color: var(--gold); opacity: 0.35; }
+    .fs-content {
+      padding: 5rem; display: flex; flex-direction: column; justify-content: center;
+    }
+    .fs-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 300; line-height: 1.25;
+    }
+    .fs-content h2 em { color: var(--gold); font-style: italic; }
+    .fs-content p { color: var(--muted-l); font-size: 0.9rem; line-height: 1.9; margin-top: 1.2rem; }
+    .fs-list {
+      list-style: none; margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .fs-list li {
+      display: flex; align-items: center; gap: 0.9rem;
+      font-size: 0.84rem; color: var(--muted-l);
+    }
+    .fs-list li svg { width: 14px; height: 14px; color: var(--gold); flex-shrink: 0; }
+
+    /* ─── QUOTE / TESTIMONIAL ─── */
+    .quote-section {
+      padding: 7rem 5%; background: var(--black); text-align: center;
+      border-top: 1px solid var(--border-g);
+      border-bottom: 1px solid var(--border-g);
+    }
+    .quote-mark svg {
+      width: 48px; height: 48px; color: var(--gold); opacity: 0.3; margin: 0 auto 2rem;
+    }
+    blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.3rem, 3.5vw, 2rem);
+      font-style: italic; font-weight: 300; line-height: 1.6;
+      max-width: 740px; margin: 0 auto; color: var(--cream);
+    }
+    cite {
+      display: block; margin-top: 2rem;
+      font-family: 'Inter', sans-serif; font-style: normal;
+      font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    cite span { color: var(--muted); }
+
+    /* ─── CONTACT / BOOKING ─── */
+    .contact-section {
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: var(--dark);
+    }
+    .contact-visual {
+      position: relative; min-height: 500px; overflow: hidden;
+      background: linear-gradient(135deg, #120e06 0%, #0a0a0a 100%);
+      display: flex; align-items: center; justify-content: center;
+      border-right: 1px solid var(--border-g);
+    }
+    .contact-visual-pattern {
+      position: absolute; inset: 0; opacity: 0.04;
+      background-image:
+        repeating-linear-gradient(45deg, var(--gold), var(--gold) 1px, transparent 1px, transparent 30px);
+    }
+    .contact-map-content {
+      position: relative; z-index: 1; text-align: center; padding: 3rem;
+    }
+    .contact-map-icon { color: var(--gold); opacity: 0.45; margin: 0 auto 1.5rem; width: 56px; height: 56px; }
+    .contact-map-addr {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 300; line-height: 1.5; color: var(--cream);
+    }
+    .contact-map-city {
+      font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-top: 0.75rem;
+    }
+    .contact-info { padding: 5rem; display: flex; flex-direction: column; justify-content: center; gap: 2.5rem; }
+    .contact-info h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 300;
+    }
+    .contact-info h2 em { color: var(--gold); font-style: italic; }
+    .contact-rows { display: flex; flex-direction: column; gap: 1.8rem; }
+    .contact-row { display: flex; align-items: flex-start; gap: 1.2rem; }
+    .cr-icon { width: 18px; height: 18px; color: var(--gold); flex-shrink: 0; margin-top: 3px; }
+    .cr-label { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
+    .cr-value { font-size: 0.9rem; color: var(--cream); line-height: 1.5; }
+    .contact-info .btn-gold { align-self: flex-start; margin-top: 0.5rem; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--border-g);
+      padding: 2.5rem 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+    }
+    .footer-logo em { font-style: italic; }
+    .footer-copy { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; }
+    .footer-social { display: flex; gap: 1.2rem; }
+    .footer-social a { color: var(--muted); transition: color 0.25s; }
+    .footer-social a:hover { color: var(--gold); }
+    .footer-social svg { width: 18px; height: 18px; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 220px 220px 220px;
+      }
+      .gallery-cell.tall { grid-row: span 1; }
+    }
+
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+      .about-media { max-width: 380px; margin: 0 auto; }
+      .about-badge { bottom: -1rem; right: -0.5rem; }
+      .feature-section { grid-template-columns: 1fr; }
+      .fs-content { padding: 3.5rem 2rem; }
+      .contact-section { grid-template-columns: 1fr; }
+      .contact-visual { min-height: 300px; border-right: none; border-bottom: 1px solid var(--border-g); }
+      .contact-info { padding: 3.5rem 2rem; }
+      .strip-inner { grid-template-columns: 1fr; }
+      .strip-item { border-bottom: 1px solid var(--border-g); }
+      .strip-item:last-child { border-bottom: none; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-book { display: none; }
+      .hamburger { display: flex; }
+      .services-grid { grid-template-columns: 1fr; }
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 180px 180px 180px;
+        gap: 4px;
+      }
+      .gallery-cell.tall { grid-row: span 1; }
+      .about-features { grid-template-columns: 1fr; }
+      .hero h1 { letter-spacing: 0.04em; }
+    }
+
+    @media (max-width: 540px) {
+      nav { padding: 1.1rem 1.5rem; }
+      .nav-logo { font-size: 1.1rem; }
+      .hero { min-height: 100dvh; }
+      .hero-content { padding: 0 1.2rem; }
+      .hero h1 { letter-spacing: 0.02em; }
+      .hero-cta { flex-direction: column; align-items: stretch; gap: 1rem; }
+      .btn-gold, .btn-outline { text-align: center; padding: 1rem 2rem; }
+      .gallery-grid { grid-template-columns: 1fr; grid-template-rows: unset; }
+      .gallery-cell { height: 220px; }
+      .gallery-cell.tall { height: 220px; }
+      .about-section { padding: 5rem 1.5rem; }
+      .gallery-section { padding: 5rem 1.5rem; }
+      .services-section { padding: 5rem 1.5rem; }
+      footer { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══ NAV ═══ -->
+  <nav>
+    <div class="nav-logo">Barrios <em>Barbershop</em></div>
+    <ul class="nav-links">
+      <li><a href="#about">Chi Siamo</a></li>
+      <li><a href="#servizi">Servizi</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contatti">Contatti</a></li>
+    </ul>
+    <a href="#contatti" class="nav-book">Prenota</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <!-- Mobile menu -->
+  <ul class="mobile-menu" id="mobile-menu">
+    <li><a href="#about" class="m-link">Chi Siamo</a></li>
+    <li><a href="#servizi" class="m-link">Servizi</a></li>
+    <li><a href="#gallery" class="m-link">Gallery</a></li>
+    <li><a href="#contatti" class="m-link">Contatti</a></li>
+    <li><a href="#contatti" class="m-book m-link">Prenota ora</a></li>
+  </ul>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-ring hero-ring-1"></div>
+    <div class="hero-ring hero-ring-2"></div>
+    <div class="hero-ring hero-ring-3"></div>
+    <div class="hero-vline hero-vline-l"></div>
+    <div class="hero-vline hero-vline-r"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow label">Est. 2018 &nbsp;&mdash;&nbsp; Milano</div>
+
+      <h1>
+        Barrios
+        <em>Barbershop</em>
+      </h1>
+
+      <p class="hero-subtitle">Arte del rasoio &nbsp;&bull;&nbsp; Tradizione &nbsp;&bull;&nbsp; Stile</p>
+
+      <div class="hero-divider">
+        <span></span>
+        <!-- Scissors SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
+          <line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/>
+          <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+        </svg>
+        <span></span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#contatti" class="btn-gold">Prenota Appuntamento</a>
+        <a href="#servizi" class="btn-outline">I Nostri Servizi</a>
+      </div>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <span>Scopri</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ═══ KEY NUMBERS STRIP ═══ -->
+  <div class="strip">
+    <div class="strip-inner">
+      <div class="strip-item">
+        <div class="strip-num">6+</div>
+        <div class="strip-label">Anni di Esperienza</div>
+      </div>
+      <div class="strip-item">
+        <div class="strip-num">4800+</div>
+        <div class="strip-label">Clienti Soddisfatti</div>
+      </div>
+      <div class="strip-item">
+        <div class="strip-num">8</div>
+        <div class="strip-label">Master Barbers</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ABOUT (testo + foto integrata) ═══ -->
+  <section class="about-section" id="about">
+    <div class="about-grid">
+
+      <!-- MEDIA: foto prominente con frame decorativo -->
+      <div class="about-media">
+        <div class="about-photo-wrap">
+          <img src="1742824917112.jpeg" alt="Barrios Barbershop – interno del negozio" loading="lazy">
+          <div class="about-frame"></div>
+        </div>
+        <div class="about-badge">
+          <div class="about-badge-num">2018</div>
+          <div class="about-badge-text">Fondato a Milano</div>
+        </div>
+      </div>
+
+      <!-- TESTO -->
+      <div class="about-text">
+        <div class="label">Chi Siamo</div>
+        <span class="gold-line"></span>
+        <h2>Il taglio perfetto<br>è un'<em>arte antica</em></h2>
+        <p>Barrios Barbershop nasce dalla passione per la cura maschile autentica. Situati nel cuore di Milano, combiniamo tecniche barberiali tradizionali con uno stile contemporaneo, offrendo un'esperienza che va oltre il semplice taglio.</p>
+        <p>Ogni dettaglio del nostro spazio è pensato per farti sentire a tuo agio: dalla selezione dei prodotti premium all'attenzione maniacale per la qualità di ogni servizio.</p>
+
+        <div class="about-features">
+          <div class="about-feature">
+            <!-- Check icon -->
+            <svg class="af-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <div class="af-title">Prodotti Premium</div>
+              <div class="af-text">Solo marchi selezionati per la cura della barba e dei capelli</div>
+            </div>
+          </div>
+          <div class="about-feature">
+            <svg class="af-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <div class="af-title">Rasoio a Mano</div>
+              <div class="af-text">Rasatura tradizionale con rasoio dritto e schiuma calda</div>
+            </div>
+          </div>
+          <div class="about-feature">
+            <svg class="af-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <div class="af-title">Barbers Certificati</div>
+              <div class="af-text">Formazione internazionale e aggiornamento continuo</div>
+            </div>
+          </div>
+          <div class="about-feature">
+            <svg class="af-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <div class="af-title">Ambiente Esclusivo</div>
+              <div class="af-text">Spazio curato per un'esperienza di relax completa</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ SERVICES ═══ -->
+  <section class="services-section" id="servizi">
+    <div class="services-header">
+      <div class="label">I Nostri Servizi</div>
+      <span class="gold-line center"></span>
+      <h2>Ogni visita,<br>una <em>cura su misura</em></h2>
+      <p>Dalla rasatura classica ai tagli più moderni, ogni servizio è eseguito con precisione artigianale.</p>
+    </div>
+
+    <div class="services-grid">
+
+      <!-- SERVICE 1 -->
+      <div class="service-card">
+        <!-- Scissors icon -->
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
+          <line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/>
+          <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+        </svg>
+        <div class="service-name">Taglio Classico</div>
+        <div class="service-desc">Un taglio impeccabile su misura per la forma del tuo viso. Incluso lavaggio, asciugatura e styling finale con prodotti selezionati.</div>
+        <div class="service-price">€28 <span>da</span></div>
+      </div>
+
+      <!-- SERVICE 2 -->
+      <div class="service-card">
+        <!-- Razor icon (stylized) -->
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14.5 2L21 8.5l-10 10L4 13z"/><path d="M4 13l-1.5 6.5 6.5-1.5"/>
+          <line x1="14.5" y1="9.5" x2="17.5" y2="6.5"/>
+        </svg>
+        <div class="service-name">Rasatura Tradizionale</div>
+        <div class="service-desc">Rasatura con rasoio dritto, asciugamano caldo, schiuma artigianale. Il rituale del barbiere classico nella sua forma più pura.</div>
+        <div class="service-price">€35 <span>da</span></div>
+      </div>
+
+      <!-- SERVICE 3 -->
+      <div class="service-card">
+        <!-- Beard icon -->
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"/>
+          <path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+          <path d="M7 14c0 2 2 4 5 4s5-2 5-4"/>
+        </svg>
+        <div class="service-name">Barba &amp; Styling</div>
+        <div class="service-desc">Definizione dei contorni, rifinitura e trattamento idratante per una barba sempre curata e in forma. Include massaggio con olio.</div>
+        <div class="service-price">€22 <span>da</span></div>
+      </div>
+
+      <!-- SERVICE 4 -->
+      <div class="service-card">
+        <!-- Combo icon -->
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2a9 9 0 1 0 0 18A9 9 0 0 0 12 2z"/>
+          <path d="M12 7v5l3 3"/>
+          <path d="M7 3.338A9.954 9.954 0 0 1 12 2"/>
+        </svg>
+        <div class="service-name">Taglio + Barba</div>
+        <div class="service-desc">Il combo completo: taglio personalizzato e cura professionale della barba. Il nostro servizio più richiesto, tutto in un'unica sessione.</div>
+        <div class="service-price">€48 <span>da</span></div>
+      </div>
+
+      <!-- SERVICE 5 -->
+      <div class="service-card">
+        <!-- Head/treatment icon -->
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        <div class="service-name">Trattamento Cuoio</div>
+        <div class="service-desc">Scrub esfoliante, maschera nutriente e massaggio del cuoio capelluto per rivitalizzare la cute e rinforzare il capello.</div>
+        <div class="service-price">€30 <span>da</span></div>
+      </div>
+
+      <!-- SERVICE 6 -->
+      <div class="service-card">
+        <!-- Kids icon -->
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          <path d="M9 8h6"/>
+        </svg>
+        <div class="service-name">Junior Cut</div>
+        <div class="service-desc">Taglio dedicato ai più giovani (fino a 14 anni), eseguito con la stessa cura e attenzione dei tagli adulti, in un ambiente tranquillo.</div>
+        <div class="service-price">€18 <span>da</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ GALLERY (integrata nella pagina, non in fondo) ═══ -->
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-header">
+      <div class="label">I Nostri Lavori</div>
+      <span class="gold-line center"></span>
+      <h2>Il risultato<br>parla da <em>solo</em></h2>
+    </div>
+
+    <div class="gallery-grid">
+      <!-- Cella 1: tall, colonna sinistra -->
+      <div class="gallery-cell tall">
+        <div class="g-placeholder g-p1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </div>
+        <div class="cell-overlay"></div>
+        <div class="cell-label">Fade Classico</div>
+      </div>
+      <!-- Cella 2 -->
+      <div class="gallery-cell">
+        <img src="1742824917112.jpeg" alt="Taglio eseguito da Barrios Barbershop" loading="lazy">
+        <div class="cell-overlay"></div>
+        <div class="cell-label">Taglio &amp; Barba</div>
+      </div>
+      <!-- Cella 3 -->
+      <div class="gallery-cell">
+        <div class="g-placeholder g-p2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </div>
+        <div class="cell-overlay"></div>
+        <div class="cell-label">Rasatura</div>
+      </div>
+      <!-- Cella 4: tall, colonna destra -->
+      <div class="gallery-cell tall">
+        <div class="g-placeholder g-p3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </div>
+        <div class="cell-overlay"></div>
+        <div class="cell-label">Styling Premium</div>
+      </div>
+      <!-- Cella 5 -->
+      <div class="gallery-cell">
+        <div class="g-placeholder g-p4">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </div>
+        <div class="cell-overlay"></div>
+        <div class="cell-label">Barba Tradizionale</div>
+      </div>
+      <!-- Cella 6 -->
+      <div class="gallery-cell">
+        <div class="g-placeholder g-p5">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </div>
+        <div class="cell-overlay"></div>
+        <div class="cell-label">Skin Fade</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FEATURE SPLIT: foto + esperienza ═══ -->
+  <div class="feature-section">
+    <div class="fs-visual">
+      <div class="fs-visual-placeholder">
+        <div class="fs-visual-pattern"></div>
+        <div class="fs-mark">
+          <!-- Barber pole / comb SVG graphic -->
+          <svg viewBox="0 0 60 100" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+            <rect x="22" y="8" width="16" height="84" rx="8" stroke="currentColor" opacity="0.4"/>
+            <path d="M22 25 Q30 28 38 25" stroke="currentColor" opacity="0.5"/>
+            <path d="M22 40 Q30 43 38 40" stroke="currentColor" opacity="0.5"/>
+            <path d="M22 55 Q30 58 38 55" stroke="currentColor" opacity="0.5"/>
+            <path d="M22 70 Q30 73 38 70" stroke="currentColor" opacity="0.5"/>
+            <circle cx="30" cy="10" r="4" opacity="0.35"/>
+            <circle cx="30" cy="90" r="4" opacity="0.35"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="fs-content">
+      <div class="label">La nostra filosofia</div>
+      <span class="gold-line"></span>
+      <h2>Non solo un taglio.<br>Un'<em>esperienza</em>.</h2>
+      <p>Crediamo che ogni visita dal barbiere debba essere un momento per sé stessi. Dal primo asciugamano caldo all'ultimo tocco di cera, ogni passaggio è pensato per darti il massimo.</p>
+      <ul class="fs-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Consulenza personalizzata gratuita ad ogni visita
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Prodotti professionali American Crew, Layrite e Reuzel
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Ambiente rilassante con musica selezionata e drink di benvenuto
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Prenotazione online rapida, nessuna attesa
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ QUOTE ═══ -->
+  <section class="quote-section">
+    <div class="quote-mark">
+      <!-- Quote icon SVG -->
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+      </svg>
+    </div>
+    <blockquote>
+      "Da Barrios ho trovato non solo il mio barbiere di fiducia, ma un'esperienza che mi ha ridato il piacere di prendermi cura di me stesso."
+    </blockquote>
+    <cite>Marco T. &nbsp;<span>&mdash; Cliente dal 2019</span></cite>
+  </section>
+
+  <!-- ═══ CONTACT / BOOKING ═══ -->
+  <section id="contatti">
+    <div class="contact-section">
+      <!-- Mappa decorativa / indirizzo visivo -->
+      <div class="contact-visual">
+        <div class="contact-visual-pattern"></div>
+        <div class="contact-map-content">
+          <!-- Location pin SVG -->
+          <svg class="contact-map-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <div class="contact-map-addr">Via Brera 42<br>20121 Milano</div>
+          <div class="contact-map-city">Centro Storico &nbsp;&bull;&nbsp; MM Lanza</div>
+        </div>
+      </div>
+
+      <!-- Info e form prenotazione -->
+      <div class="contact-info">
+        <div>
+          <div class="label">Vieni a Trovarci</div>
+          <span class="gold-line"></span>
+          <h2>Prenota il tuo<br><em>appuntamento</em></h2>
+        </div>
+
+        <div class="contact-rows">
+          <div class="contact-row">
+            <!-- Clock icon -->
+            <svg class="cr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <div>
+              <div class="cr-label">Orari</div>
+              <div class="cr-value">Lun – Ven: 09:00 – 20:00<br>Sab: 09:00 – 18:00<br>Dom: Chiuso</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <!-- Phone icon -->
+            <svg class="cr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/>
+            </svg>
+            <div>
+              <div class="cr-label">Telefono</div>
+              <div class="cr-value">+39 02 1234 5678</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <!-- Mail icon -->
+            <svg class="cr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <div>
+              <div class="cr-label">Email</div>
+              <div class="cr-value">info@barriosbarbershop.it</div>
+            </div>
+          </div>
+        </div>
+
+        <a href="tel:+390212345678" class="btn-gold">Chiama Ora</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-logo">Barrios <em>Barbershop</em></div>
+    <div class="footer-copy">&copy; 2024 Barrios Barbershop Milano. Tutti i diritti riservati.</div>
+    <div class="footer-social">
+      <!-- Instagram -->
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      </a>
+      <!-- Facebook -->
+      <a href="#" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+      </a>
+      <!-- WhatsApp -->
+      <a href="#" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        </svg>
+      </a>
+    </div>
+  </footer>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script>
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    // Close on link click
+    document.querySelectorAll('.m-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Shrink nav on scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 80) {
+        nav.style.padding = '0.9rem 5%';
+      } else {
+        nav.style.padding = '1.4rem 5%';
+      }
+    }, { passive: true });
+
+    // Simple scroll-reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.service-card, .about-feature, .strip-item, .gallery-cell').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
