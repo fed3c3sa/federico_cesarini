@@ -2,7 +2,7 @@
 
 Personal site of Federico Cesarini, served by GitHub Pages from `main` (custom domain in `CNAME`).
 
-The site is one static page, with no build step and no trackers (`barrios-barbershop.html` is a separate page hosted here):
+One static page, with no build step and no trackers:
 
 - `index.html`: the page, with its CSS inline. Styled after the Crow desktop app (graphite, one blue, Inter, the brain) with a light section in SecondBrain's own style.
 - `assets/brain.js`: the brain behind the hero, drawn on a canvas the way Crow paints its wiki.
