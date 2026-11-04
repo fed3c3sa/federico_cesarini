@@ -104,9 +104,10 @@
         ],
         "datePublished": "2026-09-22",
         "publisher": { "@type": "Organization", "name": "Zenodo", "url": "https://zenodo.org/" },
-        "url": "https://doi.org/10.5281/zenodo.23260209",
-        "sameAs": "https://zenodo.org/records/23260209",
-        "identifier": { "@type": "PropertyValue", "propertyID": "DOI", "value": "10.5281/zenodo.23260209" },
+        "url": "https://doi.org/10.5281/zenodo.22898752",
+        "sameAs": ["https://zenodo.org/records/23260209", "https://doi.org/10.5281/zenodo.23260209"],
+        "identifier": { "@type": "PropertyValue", "propertyID": "DOI", "value": "10.5281/zenodo.22898752" },
+        "dateModified": "2026-10-09",
         "about": ["LLM wikis", "Retrieval-augmented generation", "Text classification", "Memory for LLM agents"]
       },
       {
@@ -207,11 +208,11 @@
     html {
       background: var(--bg);
       color-scheme: dark;
-      scroll-behavior: smooth;
       scroll-padding-top: calc(var(--bar-h) + 16px);
       -webkit-text-size-adjust: 100%;
       scrollbar-color: #2f3236 var(--bg);
     }
+    @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
     body {
       font-family: var(--font);
       font-size: 16.5px;
@@ -283,6 +284,7 @@
     }
     .nav a:hover { color: var(--text); }
     .nav a[aria-current="true"] { color: var(--text); background: var(--control); }
+    @media (max-width: 1140px) { .nav .nav-wide { display: none; } }
     .top-right { justify-self: end; display: inline-flex; align-items: center; gap: 8px; }
     .icon-btn {
       display: inline-flex; align-items: center; justify-content: center;
@@ -343,7 +345,7 @@
     }
     .hero-inner { text-align: center; max-width: 900px; }
     .avatar {
-      width: 112px; height: 112px; margin: 0 auto 30px; border-radius: 50%;
+      width: 100px; height: 100px; margin: 0 auto 30px; border-radius: 50%;
       border: 1px solid var(--border);
       box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.03);
       object-fit: cover;
@@ -448,7 +450,7 @@
       transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
     }
     .chip:hover { border-color: #3a3d42; background: #202226; }
-    .chip b { font-weight: 500; color: var(--text-3); }
+    .chip b { font-weight: 500; color: var(--text-3); white-space: nowrap; }
     .chip span { color: var(--accent-hi); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .chip .i { width: 13px; height: 13px; color: var(--faint); }
 
@@ -769,13 +771,14 @@
         <a href="#secondbrain">SecondBrain</a>
         <a href="#experience">Experience</a>
         <a href="#writing">Writing</a>
+        <a class="nav-wide" href="#talks">Talks</a>
         <a href="#contact">Contact</a>
       </nav>
       <div class="top-right">
-        <a class="icon-btn icon-cv" href="assets/Federico_Cesarini_AI_Engineer_CV_2026.pdf" aria-label="CV, PDF" title="CV (PDF)"><svg class="i"><use href="#i-file"/></svg></a>
+        <a class="icon-btn icon-cv" href="assets/Federico_Cesarini_AI_Engineer_CV_2026.pdf" aria-label="CV, PDF" title="CV (PDF)"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-file"/></svg></a>
         <a class="bar-cta" href="#contact" aria-label="Get in touch"><svg class="i" style="width:15px;height:15px" aria-hidden="true"><use href="#i-mail"/></svg><span>Get in touch</span></a>
         <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open the menu">
-          <svg class="i i-open"><use href="#i-menu"/></svg><svg class="i i-close"><use href="#i-close"/></svg>
+          <svg class="i i-open" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg><svg class="i i-close" aria-hidden="true" focusable="false"><use href="#i-close"/></svg>
         </button>
       </div>
     </div>
@@ -794,19 +797,19 @@
   <section class="hero" id="top" aria-label="Introduction">
     <canvas data-brain data-seed="7" aria-hidden="true"></canvas>
     <div class="hero-inner" data-brain-clear>
-      <img class="avatar rise" src="1742824917112.jpeg" width="112" height="112" alt="Federico Cesarini" fetchpriority="high">
+      <img class="avatar rise" src="1742824917112.jpeg" width="100" height="100" alt="Federico Cesarini" fetchpriority="high">
       <h1 class="rise rise-1">Federico Cesarini</h1>
       <p class="claim rise rise-2"><b>I build memory systems</b> for agents, and humans.</p>
       <p class="roles rise rise-3"><span class="seg">AI Engineer &amp; Consultant</span><span class="dot" aria-hidden="true">·</span><span class="seg">Solo Founder, SecondBrain</span><span class="dot" aria-hidden="true">·</span><span class="seg">Bergamo, Italy</span></p>
       <div class="cta rise rise-4">
-        <a class="pill pill-white" href="#contact">Get in touch <svg class="i"><use href="#i-arrow"/></svg></a>
-        <a class="pill pill-dark" href="assets/Federico_Cesarini_AI_Engineer_CV_2026.pdf"><svg class="i"><use href="#i-file"/></svg>CV (PDF)</a>
+        <a class="pill pill-white" href="#contact">Get in touch <svg class="i" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
+        <a class="pill pill-dark" href="assets/Federico_Cesarini_AI_Engineer_CV_2026.pdf"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-file"/></svg>CV (PDF)</a>
       </div>
       <div class="socials rise rise-5">
-        <a class="social" href="https://www.linkedin.com/in/federico-cesarini-4a9482209" rel="me noopener" target="_blank"><svg class="i"><use href="#i-linkedin"/></svg>LinkedIn</a>
-        <a class="social" href="https://github.com/fed3c3sa" rel="me noopener" target="_blank"><svg class="i"><use href="#i-github"/></svg>GitHub</a>
-        <a class="social" href="https://x.com/fed3c3sa" rel="me noopener" target="_blank"><svg class="i"><use href="#i-x"/></svg>X</a>
-        <a class="social" href="https://medium.com/@mail.fede.cesarini" rel="me noopener" target="_blank"><svg class="i"><use href="#i-medium"/></svg>Medium</a>
+        <a class="social" href="https://www.linkedin.com/in/federico-cesarini-4a9482209" rel="me noopener" target="_blank"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg>LinkedIn</a>
+        <a class="social" href="https://github.com/fed3c3sa" rel="me noopener" target="_blank"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-github"/></svg>GitHub</a>
+        <a class="social" href="https://x.com/fed3c3sa" rel="me noopener" target="_blank"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-x"/></svg>X</a>
+        <a class="social" href="https://medium.com/@mail.fede.cesarini" rel="me noopener" target="_blank"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-medium"/></svg>Medium</a>
       </div>
     </div>
   </section>
@@ -817,7 +820,7 @@
       <section class="sec first" id="profile" aria-labelledby="h-profile">
         <div class="rail"><h2 id="h-profile">Profile</h2></div>
         <div class="body">
-          <p class="lede">AI engineer and consultant. I build memory systems for agentic AI and, more broadly, generative AI products that run in production, from the agents people talk to down to the cloud infrastructure underneath.</p>
+          <p class="lede">As an AI engineer and consultant, I work on memory systems for agentic AI and, more broadly, on generative AI products that run in production, from the agents people talk to down to the cloud infrastructure underneath.</p>
           <div class="prose">
             <p>At <a href="https://www.tinextainnovationhub.com/" target="_blank" rel="noopener">Tinexta</a> I lead the engineering of the main AI features of <a href="https://www.lextel.ai/" target="_blank" rel="noopener">Lextel.ai</a>, a platform for legal professionals: deep research, document generation and an agentic legal chat. On the memory side, I built <a href="#secondbrain">SecondBrain</a>, an AI memory app with paying subscribers on the App Store and Google Play, and, together with Marco Sassarini, <a href="#crow">CROW</a>, a paper and open-source project that makes knowledge bases maintained by language models cheaper and more accurate.</p>
           </div>
@@ -835,8 +838,8 @@
             </div>
             <div class="chips">
               <a class="chip" href="https://doi.org/10.5281/zenodo.23260209" target="_blank" rel="noopener"><b>Paper</b><span>doi.org/10.5281/zenodo.23260209</span></a>
-              <a class="chip" href="https://github.com/crow-hq/llm-wiki-v2" target="_blank" rel="noopener"><b>Code</b><span>github.com/crow-hq/llm-wiki-v2</span></a>
-              <a class="chip" href="https://github.com/crow-hq/crow-desktop" target="_blank" rel="noopener"><b>Desktop app</b><span>github.com/crow-hq/crow-desktop</span></a>
+              <a class="chip" href="https://github.com/crow-hq/llm-wiki-v2" target="_blank" rel="noopener"><b>Code</b><span>crow-hq/llm-wiki-v2</span></a>
+              <a class="chip" href="https://github.com/crow-hq/crow-desktop" target="_blank" rel="noopener"><b>Desktop app</b><span>crow-hq/crow-desktop</span></a>
               <a class="chip" href="https://pypi.org/project/llmwiki2/" target="_blank" rel="noopener"><b>PyPI</b><span>llmwiki2</span></a>
             </div>
             <div class="prose crow-prose">
@@ -875,8 +878,9 @@
 
             <div class="prose">
               <p>The cost of each new document stays flat as the wiki grows, and a cost model built on these measurements keeps it at about $0.006 per document up to a million documents.</p>
-              <p>The open-source implementation, which I maintain, is a wiki of plain Markdown files that runs on your own computer with any AI provider, Ollama included, and cites its sources. It can also be the long-term memory of Claude Code, Codex or any MCP client.</p>
+              <p>The open-source implementation, which I maintain, keeps the wiki as plain Markdown files on your own computer, works with any AI provider, Ollama included, and cites its sources. It can also be the long-term memory of Claude Code, Codex or any MCP client.</p>
             </div>
+            <p class="traction">With no paid ads, as of November 2026 llm-wiki-v2 has <b>250+ stars</b> and <b>40+ forks</b> on GitHub and <b>about 3,000 downloads</b> on PyPI (mirrors included), and the paper <b>about 3,000 views</b> on Zenodo.</p>
           </article>
 
           <article class="entry desk">
@@ -895,15 +899,14 @@
                 <source src="assets/media/crow-desktop-ask.mp4" type="video/mp4">
               </video>
               <button class="vid-toggle" type="button" data-demo-toggle aria-label="Play the demo">
-                <svg class="i i-play"><use href="#i-play"/></svg><svg class="i i-pause"><use href="#i-pause"/></svg>
+                <svg class="i i-play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg><svg class="i i-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg>
               </button>
             </figure>
-            <p class="caption">Crow answering a question about two kitchen quotes: the answer cites its notes, and the brain beside it shows where they live.</p>
+            <p class="caption">Crow answering from the wiki: each answer cites the notes it used, and they light up in the brain beside the chat.</p>
             <div class="actions">
-              <a class="pill pill-white" href="https://github.com/crow-hq/crow-desktop/releases/latest" target="_blank" rel="noopener"><svg class="i"><use href="#i-down"/></svg>Download Crow</a>
-              <span class="code"><span class="prompt">$</span>pip install llmwiki2<button class="copy" type="button" data-copy="pip install llmwiki2" aria-label="Copy pip install llmwiki2"><svg class="i i-copy"><use href="#i-copy"/></svg><svg class="i i-check"><use href="#i-check"/></svg></button></span>
+              <a class="pill pill-white" href="https://github.com/crow-hq/crow-desktop/releases/latest" target="_blank" rel="noopener"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-down"/></svg>Download Crow</a>
+              <span class="code"><span class="prompt">$</span>pip install llmwiki2<button class="copy" type="button" data-copy="pip install llmwiki2" aria-label="Copy pip install llmwiki2"><svg class="i i-copy" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg><svg class="i i-check" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></button></span>
             </div>
-            <p class="traction">With no paid ads, by November 2026: <b>250+ stars</b> and <b>40+ forks</b> on GitHub, <b>about 3,000 downloads</b> on PyPI and <b>about 3,000 views</b> of the paper.</p>
           </article>
         </div>
       </section>
@@ -917,9 +920,9 @@
           <h2 id="h-sb">Just talk.<br><span>SecondBrain remembers.</span></h2>
           <p class="sb-lead">An AI memory app for iPhone, Android and the web, designed, built and launched as a one-person project, first on the App Store and then on Google Play. It is live on both today, with paying subscribers.</p>
           <div class="sb-cta">
-            <a class="sb-btn primary" href="https://apps.apple.com/us/app/secondbrain-ai-memory/id6762130376" target="_blank" rel="noopener"><svg class="i"><use href="#i-apple"/></svg>App Store</a>
-            <a class="sb-btn" href="https://play.google.com/store/apps/details?id=app.secondbrain.android" target="_blank" rel="noopener"><svg class="i"><use href="#i-play-store"/></svg>Google Play</a>
-            <a class="sb-btn" href="https://app.secondbrainmemory.com/" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg>Web app</a>
+            <a class="sb-btn primary" href="https://apps.apple.com/us/app/secondbrain-ai-memory/id6762130376" target="_blank" rel="noopener"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-apple"/></svg>App Store</a>
+            <a class="sb-btn" href="https://play.google.com/store/apps/details?id=app.secondbrain.android" target="_blank" rel="noopener"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-play-store"/></svg>Google Play</a>
+            <a class="sb-btn" href="https://app.secondbrainmemory.com/" target="_blank" rel="noopener"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-globe"/></svg>Web app</a>
           </div>
           <p class="meta">Solo founder and builder: engineering, product, design and growth<span class="dot">·</span><span class="num">since 2026</span></p>
         </div>
@@ -948,10 +951,10 @@
         </div>
 
         <div class="sb-links">
-          <a href="https://secondbrainmemory.com/" target="_blank" rel="noopener">secondbrainmemory.com<svg class="i"><use href="#i-out"/></svg></a>
-          <a href="https://github.com/fed3c3sa/secondbrain-shared-memory" target="_blank" rel="noopener">Shared memory plugin on GitHub<svg class="i"><use href="#i-out"/></svg></a>
-          <a href="https://www.producthunt.com/products/secondbrain" target="_blank" rel="noopener">Product Hunt<svg class="i"><use href="#i-out"/></svg></a>
-          <a href="https://www.youtube.com/@SecondBrainAPP" target="_blank" rel="noopener">YouTube channel<svg class="i"><use href="#i-out"/></svg></a>
+          <a href="https://secondbrainmemory.com/" target="_blank" rel="noopener">secondbrainmemory.com<svg class="i" aria-hidden="true" focusable="false"><use href="#i-out"/></svg></a>
+          <a href="https://github.com/fed3c3sa/secondbrain-shared-memory" target="_blank" rel="noopener">Shared memory plugin on GitHub<svg class="i" aria-hidden="true" focusable="false"><use href="#i-out"/></svg></a>
+          <a href="https://www.producthunt.com/products/secondbrain" target="_blank" rel="noopener">Product Hunt<svg class="i" aria-hidden="true" focusable="false"><use href="#i-out"/></svg></a>
+          <a href="https://www.youtube.com/@SecondBrainAPP" target="_blank" rel="noopener">YouTube channel<svg class="i" aria-hidden="true" focusable="false"><use href="#i-out"/></svg></a>
         </div>
       </div>
     </section>
@@ -1024,11 +1027,11 @@
           <ul class="rows">
             <li>
               <p class="row-title"><a href="https://github.com/fed3c3sa/nlq_translator" target="_blank" rel="noopener">Elasticsearch Natural Language Query</a><a class="repo" href="https://github.com/fed3c3sa/nlq_translator" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">github.com/fed3c3sa/nlq_translator</a></p>
-              <p>A service that lets you question Elasticsearch in plain language: GPT writes the query and refines it, using the structure of the index as context.</p>
+              <p>A Python library that lets you question Elasticsearch in plain language: GPT writes the query and refines it, using the structure of the index as context.</p>
             </li>
             <li>
               <p class="row-title"><a href="https://github.com/fed3c3sa/linkAIin" target="_blank" rel="noopener">linkAIin, LinkedIn AI Auto-Poster</a><a class="repo" href="https://github.com/fed3c3sa/linkAIin" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">github.com/fed3c3sa/linkAIin</a></p>
-              <p>A Google Cloud Function that researches, writes and publishes LinkedIn posts with GPT, optionally with DALL-E images, and tracks how they perform.</p>
+              <p>A Google Cloud Function that researches, writes and publishes LinkedIn posts with GPT, optionally with DALL-E images, and estimates the engagement each post may get.</p>
             </li>
             <li>
               <p class="row-title"><a href="https://github.com/fed3c3sa/claude-cad" target="_blank" rel="noopener">Claude CAD</a><a class="repo" href="https://github.com/fed3c3sa/claude-cad" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">github.com/fed3c3sa/claude-cad</a></p>
@@ -1119,8 +1122,8 @@
         <div class="body">
           <article class="talk">
             <a class="thumb" href="https://www.youtube.com/watch?v=LOfTKtfwc4I" target="_blank" rel="noopener" aria-label="Watch SecondBrain Podcast episode 1 on YouTube">
-              <img src="assets/img/podcast-ep1.webp" width="640" height="360" loading="lazy" decoding="async" alt="Federico Cesarini and Kevin Faggioli at two microphones">
-              <span class="play"><svg class="i"><use href="#i-play"/></svg><span class="num">40:57</span></span>
+              <img src="assets/img/podcast-ep1.webp" width="640" height="360" loading="lazy" decoding="async" alt="A frame from SecondBrain Podcast episode 1">
+              <span class="play"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-play"/></svg><span class="num">40:57</span></span>
             </a>
             <div>
               <h3><a href="https://www.youtube.com/watch?v=LOfTKtfwc4I" target="_blank" rel="noopener">AI Engineer: Developers Won't Exist in 5 Years (Do This)</a></h3>
@@ -1129,9 +1132,14 @@
             </div>
           </article>
           <div class="teach">
+            <h3>AI agents, multi-agent systems and RAG</h3>
+            <p class="org">Università degli Studi di Bergamo · Apr 2026</p>
+            <p>A session on how agents reason and use tools, the ReAct loop, when several specialized agents work better than one agent with many tools, retrieval and MCP, with demos.</p>
+          </div>
+          <div class="teach">
             <h3>AI masterclasses and courses for companies</h3>
-            <p class="org">Organized by Tinexta Innovation Hub, and hands-on sessions with company teams</p>
-            <p>How language models really work, why they make things up, retrieval, agents and MCP, and how to put Claude to work on everyday tasks, explained without formulas or hype.</p>
+            <p class="org">Executive masterclasses organized by Tinexta Innovation Hub, and hands-on courses for company teams</p>
+            <p>How a language model really works, from tokens and the context window to why an answer can sound right and still be wrong, then retrieval, agents and how to put Claude to work on everyday tasks, explained without formulas or hype.</p>
           </div>
         </div>
       </section>
@@ -1153,22 +1161,22 @@
       <section class="sec" id="contact" aria-labelledby="h-contact">
         <div class="rail"><h2 id="h-contact">Contact</h2></div>
         <div class="body">
-          <p class="contact-lede">Consulting on memory systems and AI agents, talks, or a project together. <span>Write a line.</span></p>
+          <p class="contact-lede">For consulting on memory systems and AI agents, a talk or a project together, <span>write a line below.</span></p>
           <form class="composer" data-to="federico.cesarini.consulting@gmail.com" action="mailto:federico.cesarini.consulting@gmail.com" method="get">
             <label class="vh" for="msg">Your message to Federico</label>
             <textarea id="msg" name="body" rows="1" placeholder="Write to Federico…"></textarea>
-            <button class="send" type="submit" aria-label="Write the email"><svg class="i"><use href="#i-send"/></svg></button>
+            <button class="send" type="submit" aria-label="Write the email"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-send"/></svg></button>
           </form>
           <p class="composer-hint">It opens your email app, addressed to federico.cesarini.consulting@gmail.com.</p>
           <ul class="contacts">
-            <li class="wide"><a href="mailto:federico.cesarini.consulting@gmail.com"><svg class="i"><use href="#i-mail"/></svg><span class="k">Email</span><span class="v">federico.cesarini.consulting@gmail.com</span></a></li>
-            <li><a href="tel:+393920891327"><svg class="i"><use href="#i-phone"/></svg><span class="k">Phone</span><span class="v num">+39&nbsp;392&nbsp;089&nbsp;1327</span></a></li>
-            <li><a href="https://www.linkedin.com/in/federico-cesarini-4a9482209" target="_blank" rel="me noopener"><svg class="i"><use href="#i-linkedin"/></svg><span class="k">LinkedIn</span><span class="v">federico-cesarini-4a9482209</span></a></li>
-            <li><a href="https://github.com/fed3c3sa" target="_blank" rel="me noopener"><svg class="i"><use href="#i-github"/></svg><span class="k">GitHub</span><span class="v">fed3c3sa</span></a></li>
-            <li><a href="https://github.com/crow-hq" target="_blank" rel="noopener"><svg class="i"><use href="#i-github"/></svg><span class="k">CROW</span><span class="v">github.com/crow-hq</span></a></li>
-            <li><a href="https://x.com/fed3c3sa" target="_blank" rel="me noopener"><svg class="i"><use href="#i-x"/></svg><span class="k">X</span><span class="v">@fed3c3sa</span></a></li>
-            <li><a href="https://medium.com/@mail.fede.cesarini" target="_blank" rel="me noopener"><svg class="i"><use href="#i-medium"/></svg><span class="k">Medium</span><span class="v">@mail.fede.cesarini</span></a></li>
-            <li><a href="assets/Federico_Cesarini_AI_Engineer_CV_2026.pdf"><svg class="i"><use href="#i-file"/></svg><span class="k">CV</span><span class="v">PDF, 3 pages</span></a></li>
+            <li class="wide"><a href="mailto:federico.cesarini.consulting@gmail.com"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg><span class="k">Email</span><span class="v">federico.cesarini.consulting@gmail.com</span></a></li>
+            <li><a href="tel:+393920891327"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg><span class="k">Phone</span><span class="v num">+39&nbsp;392&nbsp;089&nbsp;1327</span></a></li>
+            <li><a href="https://www.linkedin.com/in/federico-cesarini-4a9482209" target="_blank" rel="me noopener"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg><span class="k">LinkedIn</span><span class="v">federico-cesarini-4a9482209</span></a></li>
+            <li><a href="https://github.com/fed3c3sa" target="_blank" rel="me noopener"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-github"/></svg><span class="k">GitHub</span><span class="v">fed3c3sa</span></a></li>
+            <li><a href="https://github.com/crow-hq" target="_blank" rel="noopener"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-github"/></svg><span class="k">CROW</span><span class="v">github.com/crow-hq</span></a></li>
+            <li><a href="https://x.com/fed3c3sa" target="_blank" rel="me noopener"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-x"/></svg><span class="k">X</span><span class="v">@fed3c3sa</span></a></li>
+            <li><a href="https://medium.com/@mail.fede.cesarini" target="_blank" rel="me noopener"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-medium"/></svg><span class="k">Medium</span><span class="v">@mail.fede.cesarini</span></a></li>
+            <li><a href="assets/Federico_Cesarini_AI_Engineer_CV_2026.pdf"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-file"/></svg><span class="k">CV</span><span class="v">PDF, 3 pages</span></a></li>
           </ul>
         </div>
       </section>

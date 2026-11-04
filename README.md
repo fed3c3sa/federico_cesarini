@@ -2,7 +2,7 @@
 
 Personal site of Federico Cesarini, served by GitHub Pages from `main` (custom domain in `CNAME`).
 
-One static page, no build step and no trackers:
+The site is one static page, with no build step and no trackers (`barrios-barbershop.html` is a separate page hosted here):
 
 - `index.html`: the page, with its CSS inline. Styled after the Crow desktop app (graphite, one blue, Inter, the brain) with a light section in SecondBrain's own style.
 - `assets/brain.js`: the brain behind the hero, drawn on a canvas the way Crow paints its wiki.
@@ -11,4 +11,4 @@ One static page, no build step and no trackers:
 - `llms.txt`, `robots.txt`, `sitemap.xml`: for search engines and AI assistants.
 - `tools/og-card.html`: the source of `assets/og.png`. Serve the repo locally (`python3 -m http.server`) and capture it with headless Chrome at 1200x630 with `--force-prefers-reduced-motion`.
 
-House rule: no em-dash or en-dash anywhere, in copy or code.
+House rule: no em-dash or en-dash in the site's copy or code.
