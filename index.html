@@ -1,1708 +1,1189 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Federico Cesarini - AI Engineer</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-        rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box
-        }
-
-        :root {
-            --bg: #030608;
-            --bg2: #060b12;
-            --bg3: #0b1220;
-            --bg4: #111a2e;
-            --border: #162035;
-            --border2: #1e2d4a;
-            --text: #eceff4;
-            --text2: #8e99af;
-            --text3: #5a6580;
-            --teal: #00e5c8;
-            --teal2: #00ffdb;
-            --teal3: #b2fff0;
-            --cyan: #00c8ff;
-            --blue: #0088cc;
-            --emerald: #10b981;
-            --amber: #f59e0b;
-            --glow: 0 0 50px rgba(0, 229, 200, 0.08);
-            --glow2: 0 0 80px rgba(0, 200, 255, 0.06);
-            --cardglow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 229, 200, 0.04);
-        }
-
-        html {
-            scroll-behavior: smooth
-        }
-
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden
-        }
-
-        ::selection {
-            background: rgba(0, 229, 200, 0.2);
-            color: #fff
-        }
-
-        /* ── NAV ── */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(3, 6, 8, 0.6);
-            backdrop-filter: blur(24px) saturate(180%);
-            border-bottom: 1px solid transparent;
-            transition: all .4s;
-        }
-
-        nav.scrolled {
-            border-bottom-color: var(--border);
-            background: rgba(3, 6, 8, 0.9)
-        }
-
-        .nav-inner {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.1rem 2.5rem
-        }
-
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--teal);
-            letter-spacing: .04em
-        }
-
-        .logo span {
-            color: var(--text3)
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2.2rem;
-            align-items: center
-        }
-
-        .nav-links a {
-            color: var(--text3);
-            text-decoration: none;
-            font-size: .88rem;
-            font-weight: 500;
-            transition: color .3s;
-            letter-spacing: .01em
-        }
-
-        .nav-links a:hover {
-            color: var(--teal)
-        }
-
-        .nav-cta {
-            padding: .55rem 1.4rem;
-            background: transparent;
-            border: 1.5px solid var(--teal);
-            color: var(--teal);
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: .85rem;
-            text-decoration: none;
-            transition: all .3s;
-        }
-
-        .nav-cta:hover {
-            background: var(--teal);
-            color: var(--bg);
-            box-shadow: 0 0 24px rgba(0, 229, 200, 0.3)
-        }
-
-        .burger {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.4rem;
-            cursor: pointer
-        }
-
-        /* ── HERO ── */
-        .hero {
-            height: 100vh;
-            min-height: 750px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            padding-top: 5rem;
-        }
-
-        /* Animated mesh gradient background */
-        .hero-mesh {
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 70% 55% at 20% 0%, rgba(0, 229, 200, 0.07), transparent 70%),
-                radial-gradient(ellipse 50% 50% at 85% 20%, rgba(0, 200, 255, 0.05), transparent 60%),
-                radial-gradient(ellipse 60% 50% at 50% 100%, rgba(0, 136, 204, 0.04), transparent 60%);
-            animation: meshShift 12s ease-in-out infinite alternate;
-        }
-
-        @keyframes meshShift {
-            0% {
-                filter: hue-rotate(0deg)
-            }
-
-            100% {
-                filter: hue-rotate(15deg)
-            }
-        }
-
-        /* Grid lines */
-        .hero-grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(0, 229, 200, 0.018) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 229, 200, 0.018) 1px, transparent 1px);
-            background-size: 80px 80px;
-            mask-image: radial-gradient(ellipse 55% 55% at 50% 50%, rgba(0, 0, 0, 0.6), transparent);
-        }
-
-        /* Floating orbs */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            pointer-events: none;
-            animation: orbFloat 20s ease-in-out infinite;
-        }
-
-        .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: rgba(0, 229, 200, 0.04);
-            top: -10%;
-            left: -5%;
-            animation-delay: 0s
-        }
-
-        .orb-2 {
-            width: 300px;
-            height: 300px;
-            background: rgba(0, 200, 255, 0.03);
-            bottom: 5%;
-            right: -5%;
-            animation-delay: -7s
-        }
-
-        .orb-3 {
-            width: 250px;
-            height: 250px;
-            background: rgba(0, 136, 204, 0.03);
-            top: 40%;
-            right: 15%;
-            animation-delay: -14s
-        }
-
-        @keyframes orbFloat {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1)
-            }
-
-            33% {
-                transform: translate(30px, -40px) scale(1.1)
-            }
-
-            66% {
-                transform: translate(-20px, 30px) scale(0.95)
-            }
-        }
-
-        .hero-content {
-            text-align: center;
-            max-width: 960px;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: .6rem;
-            padding: .5rem 1.2rem;
-            background: rgba(0, 229, 200, 0.06);
-            border: 1px solid rgba(0, 229, 200, 0.15);
-            border-radius: 999px;
-            font-size: .82rem;
-            color: var(--teal);
-            font-weight: 500;
-            margin-bottom: 2.5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .hero-badge .dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--teal);
-            animation: pulse 2s infinite;
-            box-shadow: 0 0 8px var(--teal)
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1)
-            }
-
-            50% {
-                opacity: .5;
-                transform: scale(.85)
-            }
-        }
-
-        .avatar-wrap {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            margin: 0 auto 2.5rem;
-            position: relative;
-        }
-
-        .avatar-ring {
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            background: conic-gradient(var(--teal), var(--cyan), var(--blue), var(--teal));
-            animation: spin 6s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg)
-            }
-        }
-
-        .avatar-ring::after {
-            content: '';
-            position: absolute;
-            inset: 3px;
-            border-radius: 50%;
-            background: var(--bg);
-        }
-
-        .avatar-wrap img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            display: block;
-            position: relative;
-            z-index: 1;
-        }
-
-        .avatar-glow {
-            position: absolute;
-            inset: -20px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 229, 200, 0.12), transparent 70%);
-            animation: glowPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes glowPulse {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1)
-            }
-
-            50% {
-                opacity: .6;
-                transform: scale(1.05)
-            }
-        }
-
-        .hero h1 {
-            font-size: clamp(3.2rem, 7.5vw, 6rem);
-            font-weight: 700;
-            letter-spacing: -.04em;
-            line-height: 1;
-            margin-bottom: 1.2rem;
-            color: #fff;
-        }
-
-        .hero h1 .accent {
-            background: linear-gradient(90deg, var(--teal), var(--cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero h2 {
-            font-size: clamp(1.2rem, 2.8vw, 1.7rem);
-            color: var(--teal);
-            font-weight: 600;
-            margin-bottom: 2.2rem;
-            letter-spacing: .04em;
-        }
-
-        .hero-desc {
-            font-size: 1.08rem;
-            color: var(--text2);
-            max-width: 680px;
-            margin: 0 auto 3.5rem;
-            line-height: 1.85;
-        }
-
-        .hero-btns {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap
-        }
-
-        .btn {
-            padding: .85rem 2rem;
-            border-radius: 10px;
-            font-size: .95rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: .6rem;
-            transition: all .3s;
-            cursor: pointer;
-            letter-spacing: .01em;
-        }
-
-        .btn-fill {
-            background: var(--teal);
-            color: var(--bg);
-            border: none;
-        }
-
-        .btn-fill:hover {
-            background: var(--teal2);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0, 229, 200, 0.3)
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--text);
-            border: 1.5px solid var(--border2)
-        }
-
-        .btn-ghost:hover {
-            border-color: var(--teal);
-            color: var(--teal);
-            transform: translateY(-2px)
-        }
-
-        /* Scroll indicator */
-        .scroll-hint {
-            position: absolute;
-            bottom: 2.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: .5rem;
-            color: var(--text3);
-            font-size: .75rem;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            animation: bobDown 2s ease-in-out infinite;
-        }
-
-        .scroll-hint .line {
-            width: 1px;
-            height: 28px;
-            background: linear-gradient(transparent, var(--teal));
-            border-radius: 1px
-        }
-
-        @keyframes bobDown {
-
-            0%,
-            100% {
-                transform: translateX(-50%) translateY(0)
-            }
-
-            50% {
-                transform: translateX(-50%) translateY(8px)
-            }
-        }
-
-        /* ── SECTIONS ── */
-        section {
-            padding: 7rem 2.5rem;
-            position: relative
-        }
-
-        .container {
-            max-width: 1300px;
-            margin: 0 auto
-        }
-
-        .section-label {
-            display: inline-flex;
-            align-items: center;
-            gap: .5rem;
-            font-size: .78rem;
-            font-weight: 600;
-            color: var(--teal);
-            text-transform: uppercase;
-            letter-spacing: .14em;
-            margin-bottom: .8rem;
-        }
-
-        .section-label::before {
-            content: '';
-            width: 20px;
-            height: 1.5px;
-            background: var(--teal);
-            border-radius: 1px
-        }
-
-        .section-title {
-            font-size: clamp(2.2rem, 4.5vw, 3.2rem);
-            font-weight: 700;
-            letter-spacing: -.03em;
-            margin-bottom: 1rem;
-            line-height: 1.1;
-            color: #fff;
-        }
-
-        .section-desc {
-            color: var(--text3);
-            font-size: 1.05rem;
-            max-width: 560px;
-            line-height: 1.75;
-            margin-bottom: 3.5rem
-        }
-
-        /* ── ABOUT ── */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: start
-        }
-
-        .about-text p {
-            color: var(--text2);
-            margin-bottom: 1.5rem;
-            font-size: 1.02rem;
-            line-height: 1.8
-        }
-
-        .about-text a {
-            color: var(--teal);
-            text-decoration: none;
-            font-weight: 600;
-            border-bottom: 1px solid rgba(0, 229, 200, 0.3);
-            transition: border-color .3s
-        }
-
-        .about-text a:hover {
-            border-color: var(--teal)
-        }
-
-        .skills-wrap {
-            display: grid;
-            gap: 1rem
-        }
-
-        .skill-card {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.5rem;
-            transition: all .4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(0, 229, 200, 0.03), transparent 60%);
-            opacity: 0;
-            transition: opacity .4s;
-        }
-
-        .skill-card:hover::before {
-            opacity: 1
-        }
-
-        .skill-card:hover {
-            border-color: rgba(0, 229, 200, 0.25);
-            transform: translateY(-3px);
-            box-shadow: var(--cardglow)
-        }
-
-        .skill-card h3 {
-            font-size: .92rem;
-            font-weight: 600;
-            margin-bottom: .9rem;
-            display: flex;
-            align-items: center;
-            gap: .6rem;
-            position: relative;
-        }
-
-        .skill-card h3 i {
-            color: var(--teal);
-            font-size: .85rem
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .4rem
-        }
-
-        .tag {
-            padding: .25rem .7rem;
-            background: rgba(0, 229, 200, 0.05);
-            border: 1px solid rgba(0, 229, 200, 0.1);
-            border-radius: 6px;
-            font-size: .74rem;
-            color: var(--teal3);
-            font-weight: 500;
-            transition: all .25s;
-        }
-
-        .tag:hover {
-            background: rgba(0, 229, 200, 0.1);
-            border-color: rgba(0, 229, 200, 0.25)
-        }
-
-        /* ── EXPERIENCE ── */
-        .alt-bg {
-            background: var(--bg2)
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 3rem
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 1.5px;
-            background: linear-gradient(180deg, var(--teal), var(--cyan), rgba(0, 200, 255, 0.2));
-        }
-
-        .exp-card {
-            position: relative;
-            margin-bottom: 2rem;
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2.2rem;
-            transition: all .4s;
-        }
-
-        .exp-card:hover {
-            border-color: rgba(0, 229, 200, 0.2);
-            transform: translateX(6px);
-            box-shadow: var(--cardglow)
-        }
-
-        .exp-card::before {
-            content: '';
-            position: absolute;
-            left: -3.4rem;
-            top: 2.2rem;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--bg);
-            border: 2.5px solid var(--teal);
-            z-index: 1;
-            box-shadow: 0 0 12px rgba(0, 229, 200, 0.3);
-        }
-
-        .exp-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: .8rem
-        }
-
-        .exp-role {
-            font-size: 1.25rem;
-            font-weight: 700;
-            letter-spacing: -.02em;
-            color: #fff
-        }
-
-        .exp-company {
-            color: var(--teal);
-            font-weight: 600;
-            font-size: .95rem
-        }
-
-        .exp-company a {
-            color: var(--teal);
-            text-decoration: none
-        }
-
-        .exp-company a:hover {
-            text-decoration: underline
-        }
-
-        .exp-date {
-            font-size: .78rem;
-            color: var(--text3);
-            background: var(--bg4);
-            padding: .35rem 1rem;
-            border-radius: 999px;
-            white-space: nowrap;
-            font-weight: 500;
-            border: 1px solid var(--border);
-        }
-
-        .exp-list {
-            list-style: none;
-            margin-top: .8rem
-        }
-
-        .exp-list li {
-            color: var(--text2);
-            margin-bottom: .5rem;
-            padding-left: 1.5rem;
-            position: relative;
-            font-size: .91rem;
-            line-height: 1.7;
-        }
-
-        .exp-list li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: .55rem;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--teal);
-            opacity: .5;
-        }
-
-        .highlight {
-            color: var(--amber);
-            font-weight: 600
-        }
-
-        /* ── LEXTEL BANNER ── */
-        .lextel-banner {
-            background: linear-gradient(135deg, rgba(0, 229, 200, 0.04), rgba(0, 200, 255, 0.03));
-            border: 1px solid rgba(0, 229, 200, 0.12);
-            border-radius: 14px;
-            padding: 1.8rem;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .lextel-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--teal), var(--cyan));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: var(--bg);
-            flex-shrink: 0;
-        }
-
-        .lextel-info h4 {
-            font-size: 1.02rem;
-            font-weight: 700;
-            margin-bottom: .3rem;
-            color: #fff
-        }
-
-        .lextel-info h4 a {
-            color: var(--teal);
-            text-decoration: none
-        }
-
-        .lextel-info p {
-            color: var(--text2);
-            font-size: .88rem;
-            line-height: 1.6
-        }
-
-        .lextel-tags {
-            display: flex;
-            gap: .5rem;
-            margin-top: .6rem;
-            flex-wrap: wrap
-        }
-
-        .ltag {
-            padding: .3rem .7rem;
-            border-radius: 6px;
-            font-size: .74rem;
-            font-weight: 600;
-            border: 1px solid
-        }
-
-        .ltag.r {
-            background: rgba(0, 229, 200, 0.06);
-            border-color: rgba(0, 229, 200, 0.2);
-            color: var(--teal)
-        }
-
-        .ltag.d {
-            background: rgba(16, 185, 129, 0.06);
-            border-color: rgba(16, 185, 129, 0.2);
-            color: var(--emerald)
-        }
-
-        .ltag.c {
-            background: rgba(0, 200, 255, 0.06);
-            border-color: rgba(0, 200, 255, 0.2);
-            color: var(--cyan)
-        }
-
-        /* ── PROJECTS ── */
-        .proj-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem
-        }
-
-        .proj-card {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all .4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .proj-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--teal), var(--cyan));
-            transform: scaleX(0);
-            transition: transform .4s;
-            transform-origin: left;
-        }
-
-        .proj-card:hover::after {
-            transform: scaleX(1)
-        }
-
-        .proj-card:hover {
-            border-color: rgba(0, 229, 200, 0.2);
-            transform: translateY(-6px);
-            box-shadow: var(--cardglow)
-        }
-
-        .proj-icon {
-            width: 46px;
-            height: 46px;
-            border-radius: 11px;
-            background: rgba(0, 229, 200, 0.06);
-            border: 1px solid rgba(0, 229, 200, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.3rem;
-            font-size: 1.1rem;
-            color: var(--teal);
-        }
-
-        .proj-card h3 {
-            font-size: 1.08rem;
-            font-weight: 700;
-            margin-bottom: .6rem;
-            color: #fff
-        }
-
-        .proj-card p {
-            color: var(--text3);
-            font-size: .86rem;
-            line-height: 1.7;
-            margin-bottom: 1.2rem
-        }
-
-        .proj-link {
-            color: var(--teal);
-            font-size: .84rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: .4rem;
-            transition: all .3s;
-        }
-
-        .proj-link:hover {
-            color: var(--teal2);
-            gap: .6rem
-        }
-
-        /* ── PUBLICATIONS ── */
-        .pub-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem
-        }
-
-        .pub-card {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all .4s;
-            display: flex;
-            flex-direction: row;
-        }
-
-        .pub-card:hover {
-            border-color: rgba(0, 229, 200, 0.2);
-            transform: translateY(-4px);
-            box-shadow: var(--cardglow)
-        }
-
-        .pub-img-wrap {
-            width: 220px;
-            min-height: 200px;
-            flex-shrink: 0;
-            overflow: hidden;
-            position: relative
-        }
-
-        .pub-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform .5s
-        }
-
-        .pub-card:hover .pub-img {
-            transform: scale(1.06)
-        }
-
-        .pub-img-wrap::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent 60%, var(--bg3));
-        }
-
-        .pub-body {
-            padding: 1.6rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center
-        }
-
-        .pub-date {
-            font-size: .72rem;
-            color: var(--text3);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: .1em;
-            margin-bottom: .5rem;
-        }
-
-        .pub-card h3 {
-            font-size: .98rem;
-            font-weight: 700;
-            margin-bottom: .5rem;
-            line-height: 1.35;
-            color: #fff
-        }
-
-        .pub-card h3 a {
-            color: #fff;
-            text-decoration: none;
-            transition: color .3s
-        }
-
-        .pub-card h3 a:hover {
-            color: var(--teal)
-        }
-
-        .pub-excerpt {
-            color: var(--text3);
-            font-size: .82rem;
-            line-height: 1.65;
-            margin-bottom: 1rem;
-            flex: 1
-        }
-
-        .pub-read {
-            color: var(--teal);
-            font-size: .84rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: .4rem;
-            transition: all .3s;
-        }
-
-        .pub-read:hover {
-            color: var(--teal2);
-            gap: .6rem
-        }
-
-        /* ── CONTACT ── */
-        .contact-wrap {
-            text-align: center
-        }
-
-        .contact-grid {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 3rem;
-            flex-wrap: wrap
-        }
-
-        .contact-card {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.8rem 2.2rem;
-            transition: all .35s;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: .7rem;
-            min-width: 150px;
-        }
-
-        .contact-card:hover {
-            border-color: rgba(0, 229, 200, 0.2);
-            transform: translateY(-4px);
-            box-shadow: var(--cardglow)
-        }
-
-        .contact-card .ic {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.15rem;
-            color: #fff;
-        }
-
-        .contact-card .ic.em {
-            background: linear-gradient(135deg, var(--teal), var(--cyan))
-        }
-
-        .contact-card .ic.ph {
-            background: linear-gradient(135deg, var(--emerald), #059669)
-        }
-
-        .contact-card .ic.li {
-            background: linear-gradient(135deg, #0077b5, #00a0dc)
-        }
-
-        .contact-card .ic.gh {
-            background: linear-gradient(135deg, #24292e, #444)
-        }
-
-        .contact-card .ic.md {
-            background: linear-gradient(135deg, #1a1a1a, #333)
-        }
-
-        .contact-card span {
-            color: var(--text2);
-            font-size: .82rem;
-            font-weight: 500
-        }
-
-        .contact-card:hover span {
-            color: var(--text)
-        }
-
-        /* ── EDUCATION ── */
-        .edu-card {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 2rem;
-            max-width: 600px;
-            transition: all .35s;
-        }
-
-        .edu-card:hover {
-            border-color: rgba(0, 229, 200, 0.2);
-            box-shadow: var(--cardglow)
-        }
-
-        .lang-tags {
-            margin-top: 1.2rem;
-            display: flex;
-            gap: .6rem
-        }
-
-        /* ── FOOTER ── */
-        footer {
-            background: var(--bg2);
-            border-top: 1px solid var(--border);
-            padding: 2.5rem 2rem;
-            text-align: center
-        }
-
-        footer p {
-            color: var(--text3);
-            font-size: .82rem
-        }
-
-        .foot-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1.2rem
-        }
-
-        .foot-links a {
-            color: var(--text3);
-            font-size: 1rem;
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all .3s;
-            text-decoration: none;
-        }
-
-        .foot-links a:hover {
-            color: var(--teal);
-            border-color: rgba(0, 229, 200, 0.3);
-            transform: translateY(-2px)
-        }
-
-        /* ── RESPONSIVE ── */
-        @media(max-width:1024px) {
-            .proj-grid {
-                grid-template-columns: repeat(2, 1fr)
-            }
-
-            .pub-grid {
-                grid-template-columns: 1fr
-            }
-        }
-
-        @media(max-width:768px) {
-            .hero {
-                align-items: flex-start;
-                height: auto;
-                min-height: 100vh;
-                padding-top: 5.5rem
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 2.5rem
-            }
-
-            .proj-grid {
-                grid-template-columns: 1fr
-            }
-
-            .pub-card {
-                flex-direction: column
-            }
-
-            .pub-img-wrap {
-                width: 100%;
-                min-height: 160px
-            }
-
-            .pub-img-wrap::after {
-                background: linear-gradient(180deg, transparent 60%, var(--bg3))
-            }
-
-            .hero-stats {
-                flex-wrap: wrap;
-                gap: 2rem
-            }
-
-            .burger {
-                display: block
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100vh;
-                background: rgba(3, 6, 8, 0.97);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 2rem;
-                opacity: 0;
-                pointer-events: none;
-                transition: opacity .35s;
-                z-index: 999;
-            }
-
-            .nav-links.open {
-                opacity: 1;
-                pointer-events: all
-            }
-
-            .nav-links a {
-                font-size: 1.2rem
-            }
-
-            section {
-                padding: 5rem 1.5rem
-            }
-
-            .hero h1 {
-                font-size: clamp(2.6rem, 10vw, 3.5rem)
-            }
-
-            .contact-grid {
-                gap: 1rem
-            }
-
-            .lextel-banner {
-                flex-direction: column;
-                text-align: center
-            }
-
-            .hero-stats {
-                gap: 1.5rem 2.5rem
-            }
-
-            .timeline {
-                padding-left: 2rem
-            }
-
-            .exp-card::before {
-                left: -2.4rem
-            }
-        }
-
-        /* ── REVEAL ── */
-        .rv {
-            opacity: 0;
-            transform: translateY(25px);
-            transition: all .7s cubic-bezier(.16, 1, .3, 1)
-        }
-
-        .rv.vis {
-            opacity: 1;
-            transform: translateY(0)
-        }
-
-        .rv-d1 {
-            transition-delay: .1s
-        }
-
-        .rv-d2 {
-            transition-delay: .2s
-        }
-
-        .rv-d3 {
-            transition-delay: .3s
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Federico Cesarini · AI Engineer, memory systems for agentic AI</title>
+  <meta name="description" content="Federico Cesarini is an AI engineer and consultant in Bergamo, Italy. He builds memory systems for agentic AI: CROW, an open-source LLM wiki, and SecondBrain.">
+  <meta name="author" content="Federico Cesarini">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://www.federicocesarini.com/">
+  <meta name="theme-color" content="#0f1113">
+  <meta name="color-scheme" content="dark">
+
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Federico Cesarini">
+  <meta property="og:url" content="https://www.federicocesarini.com/">
+  <meta property="og:title" content="Federico Cesarini · AI Engineer, memory systems for agentic AI">
+  <meta property="og:description" content="I build memory systems for agents, and humans: CROW, an open-source LLM wiki with its paper and desktop app, and SecondBrain, an AI memory app for iPhone, Android and the web.">
+  <meta property="og:image" content="https://www.federicocesarini.com/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Federico Cesarini, AI engineer: I build memory systems for agents, and humans.">
+  <meta property="og:locale" content="en_US">
+  <meta property="profile:first_name" content="Federico">
+  <meta property="profile:last_name" content="Cesarini">
+  <meta property="profile:username" content="fed3c3sa">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@fed3c3sa">
+  <meta name="twitter:creator" content="@fed3c3sa">
+  <meta name="twitter:title" content="Federico Cesarini · AI Engineer, memory systems for agentic AI">
+  <meta name="twitter:description" content="I build memory systems for agents, and humans: CROW, an open-source LLM wiki, and SecondBrain, an AI memory app.">
+  <meta name="twitter:image" content="https://www.federicocesarini.com/assets/og.png">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="me" href="https://github.com/fed3c3sa">
+  <link rel="me" href="https://x.com/fed3c3sa">
+  <link rel="me" href="https://www.linkedin.com/in/federico-cesarini-4a9482209">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://www.federicocesarini.com/#website",
+        "url": "https://www.federicocesarini.com/",
+        "name": "Federico Cesarini",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.federicocesarini.com/#person" }
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://www.federicocesarini.com/#profile",
+        "url": "https://www.federicocesarini.com/",
+        "name": "Federico Cesarini · AI Engineer, memory systems for agentic AI",
+        "isPartOf": { "@id": "https://www.federicocesarini.com/#website" },
+        "mainEntity": { "@id": "https://www.federicocesarini.com/#person" },
+        "dateModified": "2026-11-04",
+        "inLanguage": "en"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://www.federicocesarini.com/#person",
+        "name": "Federico Cesarini",
+        "givenName": "Federico",
+        "familyName": "Cesarini",
+        "url": "https://www.federicocesarini.com/",
+        "image": "https://www.federicocesarini.com/1742824917112.jpeg",
+        "jobTitle": "AI Engineer & Consultant",
+        "description": "AI engineer and consultant in Bergamo, Italy, who builds memory systems for agentic AI: CROW, a paper and open-source LLM wiki written with Marco Sassarini, and SecondBrain, an AI memory app for iPhone, Android and the web.",
+        "email": "mailto:federico.cesarini.consulting@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Bergamo", "addressCountry": "IT" },
+        "worksFor": { "@type": "Organization", "name": "Tinexta Innovation Hub", "url": "https://www.tinextainnovationhub.com/" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Università degli Studi di Bergamo", "url": "https://www.unibg.it/" },
+        "knowsLanguage": ["it", "en"],
+        "knowsAbout": [
+          "Memory systems for AI agents",
+          "LLM wikis",
+          "Retrieval-augmented generation",
+          "Model Context Protocol",
+          "AI agents",
+          "Large and small language models",
+          "Google Cloud",
+          "Kubernetes",
+          "Elasticsearch"
+        ],
+        "sameAs": [
+          "https://www.linkedin.com/in/federico-cesarini-4a9482209",
+          "https://github.com/fed3c3sa",
+          "https://x.com/fed3c3sa",
+          "https://medium.com/@mail.fede.cesarini"
+        ]
+      },
+      {
+        "@type": "ScholarlyArticle",
+        "@id": "https://www.federicocesarini.com/#crow-paper",
+        "headline": "CROW: Classifier-Routed Organization of LLM Wikis",
+        "author": [
+          { "@id": "https://www.federicocesarini.com/#person" },
+          { "@type": "Person", "name": "Marco Sassarini", "url": "https://github.com/sassarini-marco" }
+        ],
+        "datePublished": "2026-09-22",
+        "publisher": { "@type": "Organization", "name": "Zenodo", "url": "https://zenodo.org/" },
+        "url": "https://doi.org/10.5281/zenodo.23260209",
+        "sameAs": "https://zenodo.org/records/23260209",
+        "identifier": { "@type": "PropertyValue", "propertyID": "DOI", "value": "10.5281/zenodo.23260209" },
+        "about": ["LLM wikis", "Retrieval-augmented generation", "Text classification", "Memory for LLM agents"]
+      },
+      {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://www.federicocesarini.com/#llm-wiki-v2",
+        "name": "llm-wiki-v2",
+        "description": "An LLM wiki of plain Markdown notes that answers with citations, with any AI provider, and runs CROW classifier routing by default.",
+        "codeRepository": "https://github.com/crow-hq/llm-wiki-v2",
+        "programmingLanguage": "Python",
+        "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+        "author": [
+          { "@id": "https://www.federicocesarini.com/#person" },
+          { "@type": "Person", "name": "Marco Sassarini" }
+        ]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://www.federicocesarini.com/#crow-desktop",
+        "name": "Crow",
+        "description": "A free desktop app that turns the documents on your computer into a wiki of linked Markdown notes you can chat with, built on llm-wiki-v2 and CROW.",
+        "operatingSystem": "macOS, Windows, Linux",
+        "applicationCategory": "ProductivityApplication",
+        "softwareVersion": "0.1.4",
+        "downloadUrl": "https://github.com/crow-hq/crow-desktop/releases/latest",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": [
+          { "@id": "https://www.federicocesarini.com/#person" },
+          { "@type": "Person", "name": "Marco Sassarini" }
+        ]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://secondbrainmemory.com/#organization",
+        "name": "SecondBrain",
+        "url": "https://secondbrainmemory.com/",
+        "logo": "https://secondbrainmemory.com/assets/logo-512.png",
+        "founder": { "@id": "https://www.federicocesarini.com/#person" }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    @font-face {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+      src: url("assets/fonts/inter-var.woff2") format("woff2");
+    }
+
+    /* Crow's tokens.css, plus SecondBrain's light palette for its own section */
+    :root {
+      --bg-deep: #0b0c0f;
+      --bg: #0f1113;
+      --surface: #141618;
+      --raised: #16181c;
+      --raised-2: #1a1c1f;
+      --control: #25272b;
+      --control-hover: #2f3236;
+      --hover: rgba(255, 255, 255, 0.045);
+      --border: #2b2d30;
+      --border-soft: #222429;
+      --divider: #1f2123;
+      --text: #ffffff;
+      --text-2: #d2d3d7;
+      --text-3: #b7bbc1;
+      --muted: #8e939a;
+      --faint: #62676e;
+      --accent: #3d80fc;
+      --accent-hi: #4a8bff;
+      --accent-soft: rgba(61, 128, 252, 0.16);
+      --crow: #f64a44;
+      --cta-bg: #f4f4f5;
+      --cta-text: #111215;
+      --ring: 0 0 0 3px rgba(61, 128, 252, 0.45);
+
+      --sb-bg: #f5f5f7;
+      --sb-card: #ffffff;
+      --sb-text: #1d1d1f;
+      --sb-text-2: #515154;
+      --sb-text-3: #6e6e73;
+      --sb-accent: #0071e3;
+      --sb-link: #0066cc;
+      --sb-fill: rgba(0, 0, 0, 0.055);
+      --sb-hairline: rgba(0, 0, 0, 0.09);
+
+      --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --max: 1200px;
+      --pad: clamp(20px, 4.2vw, 56px);
+      --rail: 228px;
+      --bar-h: 64px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      background: var(--bg);
+      color-scheme: dark;
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--bar-h) + 16px);
+      -webkit-text-size-adjust: 100%;
+      scrollbar-color: #2f3236 var(--bg);
+    }
+    body {
+      font-family: var(--font);
+      font-size: 16.5px;
+      line-height: 1.6;
+      color: var(--text-2);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+      caret-color: var(--accent-hi);
+    }
+    ::selection { background: rgba(61, 128, 252, 0.4); color: #fff; }
+    ::-webkit-scrollbar { width: 11px; height: 11px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #2b2d30; border: 3px solid var(--bg); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3a3d42; }
+
+    img, video, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; color: inherit; }
+    button { background: none; border: 0; cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px; border-radius: 8px; }
+    .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .skip {
+      position: absolute; left: 12px; top: -100px; z-index: 200;
+      padding: 10px 16px; border-radius: 10px;
+      background: var(--cta-bg); color: var(--cta-text); font-weight: 600; font-size: 14px;
+    }
+    .skip:focus { top: 12px; }
+    .i { width: 18px; height: 18px; flex: none; }
+    .i-stroke { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .i-fill { fill: currentColor; }
+    .num { font-variant-numeric: tabular-nums; }
+
+    /* in-text links: Crow's blue, underlined so they never rely on colour alone */
+    .prose a, .link {
+      color: var(--accent-hi);
+      text-decoration: underline;
+      text-decoration-color: rgba(74, 139, 255, 0.4);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.22em;
+      transition: color 0.2s var(--ease), text-decoration-color 0.2s var(--ease);
+    }
+    .prose a:hover, .link:hover { color: #7aa9ff; text-decoration-color: currentColor; }
+
+    /* ---------- the bar: SecondBrain's floating glass, in Crow's graphite ---------- */
+    .top {
+      position: fixed; inset: 0 0 auto 0; z-index: 100;
+      height: var(--bar-h);
+      background: rgba(15, 17, 19, 0.62);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.35s var(--ease), background 0.35s var(--ease);
+    }
+    .top.scrolled { border-bottom-color: var(--divider); background: rgba(15, 17, 19, 0.82); }
+    .top-inner {
+      max-width: var(--max); height: 100%; margin: 0 auto; padding: 0 var(--pad);
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; justify-self: start; font-weight: 600; font-size: 15px; color: var(--text); letter-spacing: -0.01em; }
+    .brand img { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); }
+    .nav { display: flex; gap: 2px; padding: 4px; border-radius: 999px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-soft); }
+    .nav a {
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      padding: 7px 13px; border-radius: 999px;
+      transition: color 0.2s var(--ease), background 0.2s var(--ease);
+    }
+    .nav a:hover { color: var(--text); }
+    .nav a[aria-current="true"] { color: var(--text); background: var(--control); }
+    .top-right { justify-self: end; display: inline-flex; align-items: center; gap: 8px; }
+    .icon-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 999px;
+      color: var(--text-3); background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-soft);
+      transition: color 0.2s var(--ease), background 0.2s var(--ease);
+    }
+    .icon-btn:hover { color: var(--text); background: rgba(255, 255, 255, 0.1); }
+    .icon-btn .i { width: 16px; height: 16px; }
+    .bar-cta {
+      display: inline-flex; align-items: center; gap: 7px;
+      height: 36px; padding: 0 16px; border-radius: 999px;
+      background: var(--accent); color: #fff; font-size: 13.5px; font-weight: 500;
+      transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+    }
+    .bar-cta:hover { background: var(--accent-hi); transform: translateY(-1px); }
+    .bar-cta:active { transform: scale(0.97); }
+    .menu-toggle { display: none; }
+    .menu-toggle .i-close { display: none; }
+    .menu-toggle[aria-expanded="true"] .i-open { display: none; }
+    .menu-toggle[aria-expanded="true"] .i-close { display: block; }
+    .sheet {
+      position: fixed; inset: var(--bar-h) 0 auto 0; z-index: 99;
+      padding: 10px var(--pad) 22px;
+      background: rgba(15, 17, 19, 0.96);
+      -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--divider);
+    }
+    .sheet a { display: block; padding: 13px 4px; font-size: 17px; font-weight: 500; color: var(--text-2); border-bottom: 1px solid var(--border-soft); }
+    .sheet a:last-child { border-bottom: 0; }
+
+    @media (max-width: 980px) {
+      .top-inner { grid-template-columns: 1fr auto; }
+      .nav { display: none; }
+      .menu-toggle { display: inline-flex; }
+    }
+    @media (max-width: 520px) {
+      .bar-cta span { display: none; }
+      .bar-cta { width: 36px; padding: 0; justify-content: center; }
+      .icon-cv { display: none; }
+    }
+
+    /* ---------- hero: Crow's welcome screen, the brain behind the words ---------- */
+    .hero {
+      position: relative; isolation: isolate;
+      min-height: clamp(640px, 100svh, 1040px);
+      display: grid; place-items: center;
+      padding: calc(var(--bar-h) + 48px) var(--pad) 88px;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .hero canvas { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(46% 44% at 50% 50%, rgba(15, 17, 19, 0.9) 0%, rgba(15, 17, 19, 0.66) 50%, rgba(15, 17, 19, 0) 100%),
+        linear-gradient(to bottom, rgba(15, 17, 19, 0) 72%, var(--bg) 100%);
+    }
+    .hero-inner { text-align: center; max-width: 900px; }
+    .avatar {
+      width: 112px; height: 112px; margin: 0 auto 30px; border-radius: 50%;
+      border: 1px solid var(--border);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.03);
+      object-fit: cover;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 10.2vw, 92px);
+      line-height: 1.02;
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      color: var(--text);
+      text-wrap: balance;
+    }
+    .claim {
+      margin-top: 20px;
+      font-size: clamp(21px, 2.55vw, 31px);
+      line-height: 1.3;
+      font-weight: 500;
+      letter-spacing: -0.018em;
+      color: var(--muted);
+      text-wrap: balance;
+    }
+    .claim b { font-weight: 500; color: var(--text); }
+    .roles { margin-top: 16px; font-size: 15px; line-height: 1.55; color: var(--text-3); }
+    .roles .seg { white-space: nowrap; }
+    .roles .dot, .meta .dot { color: var(--faint); padding: 0 6px; }
+    .cta { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 9px;
+      height: 50px; padding: 0 24px; border-radius: 999px;
+      font-size: 15.5px; font-weight: 500; letter-spacing: -0.005em; white-space: nowrap;
+      transition: background 0.22s var(--ease), transform 0.22s var(--ease), box-shadow 0.22s var(--ease), border-color 0.22s var(--ease);
+    }
+    .pill:active { transform: scale(0.97); }
+    .pill .i { width: 17px; height: 17px; }
+    .pill-white { background: var(--cta-bg); color: var(--cta-text); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); }
+    .pill-white:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45); }
+    .pill-dark { background: rgba(26, 28, 31, 0.78); color: var(--text); border: 1px solid var(--border); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+    .pill-dark:hover { background: var(--control); border-color: #3a3d42; transform: translateY(-1px); }
+    .socials { margin-top: 28px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .social {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 13px 7px 11px; border-radius: 999px;
+      font-size: 13.5px; font-weight: 500; color: var(--text-3);
+      background: rgba(20, 22, 24, 0.7); border: 1px solid var(--border-soft);
+      transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+    }
+    .social:hover { color: var(--text); border-color: var(--border); background: var(--raised-2); }
+    .social .i { width: 15px; height: 15px; }
+
+    /* the one authored entrance: the words settle while the brain grows from its root */
+    @media (prefers-reduced-motion: no-preference) {
+      .rise { animation: rise 1.1s var(--ease) both; }
+      .rise-1 { animation-delay: 0.08s; }
+      .rise-2 { animation-delay: 0.2s; }
+      .rise-3 { animation-delay: 0.32s; }
+      .rise-4 { animation-delay: 0.44s; }
+      .rise-5 { animation-delay: 0.56s; }
+      @keyframes rise { from { opacity: 0; transform: translateY(10px); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+    }
+
+    /* ---------- the sections: Crow's sidebar of labels, the CV's dividers ---------- */
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+    .sec { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); }
+    .rail { border-right: 1px solid var(--divider); padding: 64px 28px 64px 0; }
+    .rail h2 {
+      position: sticky; top: calc(var(--bar-h) + 30px);
+      font-size: 15px; line-height: 1.4; font-weight: 500; letter-spacing: -0.005em;
+      color: var(--text-3);
+    }
+    .body { padding: 64px 0 64px 52px; border-top: 1px solid var(--border); min-width: 0; }
+    .sec.first .body { border-top: 0; }
+    .prose { max-width: 70ch; }
+    .prose p + p { margin-top: 1.05em; }
+    .lede { font-size: clamp(19px, 1.9vw, 22px); line-height: 1.55; color: var(--text); letter-spacing: -0.012em; max-width: 34em; }
+    .lede + .prose { margin-top: 22px; }
+
+    .entry + .entry { margin-top: 44px; }
+    .head { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 20px; align-items: baseline; }
+    .head h3 { grid-column: 1; font-size: 20px; line-height: 1.3; font-weight: 600; letter-spacing: -0.016em; color: var(--text); text-wrap: balance; }
+    .head .when { grid-column: 2; grid-row: 1; font-size: 14px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .head .org { grid-column: 1 / -1; margin-top: 3px; font-size: 15.5px; font-weight: 500; color: var(--text-3); }
+    .head .org .note { font-weight: 400; color: var(--muted); }
+    .logo-row { display: flex; align-items: center; gap: 14px; }
+    .head-logo { align-items: center; }
+    .logo-row img { width: auto; height: 40px; flex: none; }
+
+    ul.points { list-style: none; margin-top: 16px; max-width: 70ch; }
+    ul.points li { position: relative; padding-left: 20px; }
+    ul.points li + li { margin-top: 9px; }
+    ul.points li::before {
+      content: ""; position: absolute; left: 2px; top: 0.66em;
+      width: 6px; height: 6px; border-radius: 50%; background: #7f868f;
+    }
+
+    /* links shown as the chips Crow puts under an answer */
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 7px; max-width: 100%;
+      padding: 6px 11px 6px 10px; border-radius: 8px;
+      background: var(--raised-2); border: 1px solid var(--border-soft);
+      font-size: 13.5px; line-height: 1.35; color: var(--muted);
+      transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+    }
+    .chip:hover { border-color: #3a3d42; background: #202226; }
+    .chip b { font-weight: 500; color: var(--text-3); }
+    .chip span { color: var(--accent-hi); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .chip .i { width: 13px; height: 13px; color: var(--faint); }
+
+    /* ---------- CROW ---------- */
+    .crow-prose { margin-top: 24px; }
+    .bench {
+      margin: 30px 0 30px; padding: 24px 26px 20px;
+      border-radius: 14px; background: var(--surface); border: 1px solid var(--border);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      max-width: 760px;
+    }
+    .bench-title { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -0.008em; }
+    .bench-sub { margin-top: 2px; font-size: 13.5px; color: var(--muted); }
+    .metric { margin-top: 20px; }
+    .metric-name { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--text-3); }
+    .metric-name small { font-size: 12.5px; color: var(--muted); }
+    .bars { margin-top: 8px; display: grid; gap: 7px; }
+    .bar { display: grid; grid-template-columns: 74px minmax(0, 1fr) 78px; align-items: center; gap: 12px; font-size: 13px; }
+    .bar > span { color: var(--muted); }
+    .bar > b { text-align: right; font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+    .bar.base > b { color: var(--muted); font-weight: 500; }
+    .track { height: 10px; border-radius: 999px; background: #1d1f23; overflow: hidden; }
+    .fill { display: block; height: 100%; width: 0; border-radius: inherit; transition: width 1.3s var(--ease); }
+    .bar.crow .fill { background: var(--accent); }
+    .bar.base .fill { background: #464a51; }
+    .bench.in .fill { width: var(--w); }
+    .bench .metric:nth-of-type(2) .fill { transition-delay: 0.08s; }
+    .bench .metric:nth-of-type(3) .fill { transition-delay: 0.16s; }
+    .bench-note { margin-top: 18px; font-size: 12.5px; color: var(--muted); }
+    @media (prefers-reduced-motion: reduce) { .fill { transition: none; } }
+
+    .desk { margin-top: 48px; }
+    .window {
+      position: relative; margin-top: 20px; max-width: 900px;
+      border-radius: 13px; overflow: hidden;
+      background: var(--bg-deep); border: 1px solid var(--border);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 2px 10px rgba(0, 0, 0, 0.35);
+    }
+    .window-bar { display: flex; align-items: center; gap: 14px; height: 34px; padding: 0 14px; background: var(--bg); border-bottom: 1px solid var(--divider); }
+    .lights { display: flex; gap: 7px; }
+    .lights i { width: 11px; height: 11px; border-radius: 50%; }
+    .lights i:nth-child(1) { background: #ec6765; }
+    .lights i:nth-child(2) { background: #f2ca44; }
+    .lights i:nth-child(3) { background: #65c466; }
+    .window-title { font-size: 12.5px; font-weight: 500; color: var(--muted); }
+    .window video { width: 100%; height: auto; aspect-ratio: 960 / 600; background: var(--bg); }
+    .vid-toggle {
+      position: absolute; right: 14px; bottom: 14px;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 38px; height: 38px; border-radius: 999px;
+      background: rgba(15, 17, 19, 0.72); border: 1px solid var(--border); color: var(--text);
+      -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+      transition: background 0.2s var(--ease);
+    }
+    .vid-toggle:hover { background: var(--control); }
+    .vid-toggle .i { width: 15px; height: 15px; }
+    .vid-toggle .i-pause { display: none; }
+    .vid-toggle.is-playing .i-play { display: none; }
+    .vid-toggle.is-playing .i-pause { display: block; }
+    .caption { margin-top: 14px; font-size: 14px; color: var(--muted); max-width: 70ch; }
+    .actions { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .actions .pill { height: 46px; padding: 0 20px; font-size: 15px; }
+    .code {
+      display: inline-flex; align-items: center; gap: 4px;
+      height: 46px; padding: 0 6px 0 16px; border-radius: 999px;
+      background: var(--raised-2); border: 1px solid var(--border);
+      font-family: var(--mono); font-size: 14px; color: var(--text-2);
+    }
+    .code .prompt { color: var(--faint); margin-right: 6px; }
+    .copy {
+      position: relative; display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 999px; color: var(--muted);
+      transition: color 0.2s var(--ease), background 0.2s var(--ease);
+    }
+    .copy:hover { color: var(--text); background: var(--control); }
+    .copy .i { width: 15px; height: 15px; }
+    .copy .i-check { display: none; color: var(--ok, #4cc4ae); }
+    .copy.copied .i-copy { display: none; }
+    .copy.copied .i-check { display: block; }
+    .traction { margin-top: 28px; font-size: 14.5px; color: var(--muted); max-width: 70ch; }
+    .traction b { color: var(--text-3); font-weight: 500; }
+
+    /* ---------- SecondBrain: its own light, Apple-like world ---------- */
+    .sb { background: var(--sb-bg); color: var(--sb-text); padding: clamp(84px, 10vw, 132px) 0 clamp(80px, 9vw, 120px); color-scheme: light; }
+    .sb ::selection { background: var(--sb-accent); color: #fff; }
+    .sb :focus-visible { outline-color: var(--sb-accent); }
+    .sb-head { text-align: center; max-width: 1120px; margin: 0 auto; }
+    .sb-brand { display: inline-flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+    .sb-brand img { width: 30px; height: auto; }
+    .sb h2 {
+      margin-top: 20px;
+      font-size: clamp(46px, 7.2vw, 88px); line-height: 1.02; font-weight: 700; letter-spacing: -0.04em;
+      text-wrap: balance;
+    }
+    .sb h2 span { color: var(--sb-text-3); }
+    .sb-lead { margin: 22px auto 0; max-width: 36em; font-size: clamp(17px, 1.6vw, 19px); line-height: 1.55; color: var(--sb-text-2); text-wrap: pretty; }
+    .sb-cta { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .sb-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 44px; padding: 0 20px; border-radius: 999px;
+      font-size: 15px; font-weight: 500; white-space: nowrap;
+      background: var(--sb-fill); color: var(--sb-text);
+      transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+    }
+    .sb-btn:hover { background: rgba(0, 0, 0, 0.09); transform: translateY(-1px); }
+    .sb-btn:active { transform: scale(0.97); }
+    .sb-btn.primary { background: var(--sb-accent); color: #fff; }
+    .sb-btn.primary:hover { background: #0077ed; }
+    .sb-btn .i { width: 16px; height: 16px; }
+    .meta { margin-top: 18px; font-size: 14px; color: var(--sb-text-3); }
+    .meta .dot { color: #aeaeb2; }
+
+    .phones {
+      margin: clamp(48px, 6vw, 76px) auto 0; max-width: 1080px;
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.8vw, 22px);
+    }
+    .phones figure {
+      border-radius: 26px; overflow: hidden; background: #f6f4f0;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+    }
+    .phones figure:hover { transform: translateY(-4px); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.11), 0 2px 8px rgba(0, 0, 0, 0.05); }
+    .phones img { width: 100%; height: auto; aspect-ratio: 720 / 1558; }
+
+    .sb-cols {
+      margin: clamp(56px, 7vw, 88px) auto 0; max-width: 1080px;
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(28px, 4vw, 56px);
+    }
+    .sb-cols h3 { font-size: 21px; font-weight: 600; letter-spacing: -0.02em; }
+    .sb-cols .when { display: block; margin-top: 2px; font-size: 13.5px; font-weight: 500; color: var(--sb-text-3); font-variant-numeric: tabular-nums; }
+    .sb-cols p { margin-top: 12px; font-size: 16px; line-height: 1.6; color: var(--sb-text-2); }
+    .sb-links {
+      margin: clamp(48px, 6vw, 72px) auto 0; max-width: 1080px; padding-top: 26px;
+      border-top: 1px solid var(--sb-hairline);
+      display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: center;
+    }
+    .sb-links a {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 15px; font-weight: 500; color: var(--sb-link);
+    }
+    .sb-links a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+    .sb-links .i { width: 14px; height: 14px; }
+
+    /* ---------- lists: competencies, projects, writing, talks ---------- */
+    .kv { display: grid; grid-template-columns: 150px minmax(0, 1fr); column-gap: 24px; max-width: 840px; }
+    .kv + .kv { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--border-soft); }
+    .kv dt { font-weight: 600; color: var(--text); font-size: 16px; }
+    .kv dd { color: var(--text-2); }
+
+    .rows { list-style: none; max-width: 860px; }
+    .rows > li { padding: 20px 0; border-top: 1px solid var(--border-soft); }
+    .rows > li:first-child { padding-top: 0; border-top: 0; }
+    .row-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; font-size: 17.5px; font-weight: 600; color: var(--text); letter-spacing: -0.012em; }
+    .row-title a { transition: color 0.2s var(--ease); }
+    .row-title a:hover { color: var(--accent-hi); }
+    .row-title .repo { font-size: 13.5px; font-weight: 400; color: var(--accent-hi); }
+    .rows p { margin-top: 6px; color: var(--text-2); max-width: 70ch; }
+
+    .writing { list-style: none; max-width: 880px; }
+    .writing li { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 20px; padding: 18px 0; border-top: 1px solid var(--border-soft); }
+    .writing li:first-child { border-top: 0; padding-top: 0; }
+    .writing time { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; }
+    .writing a.t { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); transition: color 0.2s var(--ease); }
+    .writing a.t:hover { color: var(--accent-hi); }
+    .writing .where { display: inline-block; margin-left: 8px; font-size: 13px; font-weight: 500; color: var(--muted); }
+    .writing p { margin-top: 4px; font-size: 15.5px; color: var(--text-3); }
+    .more { margin-top: 22px; }
+
+    .talk { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 28px; align-items: start; max-width: 900px; }
+    .thumb {
+      position: relative; display: block; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border); background: var(--raised);
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.4);
+    }
+    .thumb img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; transition: transform 0.6s var(--ease); }
+    .thumb:hover img { transform: scale(1.03); }
+    .thumb .play {
+      position: absolute; left: 12px; bottom: 12px;
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 7px 12px 7px 10px; border-radius: 999px;
+      background: rgba(15, 17, 19, 0.82); border: 1px solid var(--border);
+      font-size: 13px; font-weight: 500; color: var(--text);
+      -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    }
+    .thumb .play .i { width: 12px; height: 12px; }
+    .talk h3, .teach h3 { font-size: 18.5px; font-weight: 600; color: var(--text); letter-spacing: -0.014em; line-height: 1.35; }
+    .talk .org, .teach .org { margin-top: 4px; font-size: 14.5px; color: var(--muted); }
+    .talk p, .teach p { margin-top: 10px; }
+    .teach { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border-soft); max-width: 900px; }
+
+    .langs { margin-top: 26px; }
+    .langs b { color: var(--text); font-weight: 600; }
+
+    /* ---------- contact: Crow's composer ---------- */
+    .contact-lede { font-size: clamp(24px, 3vw, 36px); line-height: 1.2; font-weight: 600; letter-spacing: -0.028em; color: var(--text); max-width: 20em; text-wrap: balance; }
+    .contact-lede span { color: var(--muted); }
+    .composer {
+      margin-top: 30px; max-width: 760px;
+      display: flex; align-items: flex-end; gap: 10px;
+      padding: 9px 9px 9px 22px; border-radius: 28px;
+      background: var(--raised-2); border: 1px solid var(--border);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+    .composer:focus-within { border-color: #3d4250; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35), var(--ring); }
+    .composer.empty { animation: nudge 0.5s var(--ease); }
+    @keyframes nudge { 30% { transform: translateX(-5px); } 60% { transform: translateX(4px); } }
+    .composer textarea {
+      flex: 1; min-width: 0; resize: none; border: 0; outline: 0; background: transparent;
+      padding: 11px 0; max-height: 200px; font-size: 16px; line-height: 1.5; color: var(--text);
+    }
+    .composer textarea::placeholder { color: var(--muted); }
+    .send {
+      flex: none; display: inline-flex; align-items: center; justify-content: center;
+      width: 42px; height: 42px; border-radius: 50%; background: var(--accent); color: #fff;
+      box-shadow: 0 6px 18px rgba(61, 128, 252, 0.35);
+      transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+    }
+    .send:hover { background: var(--accent-hi); transform: translateY(-1px); }
+    .send:active { transform: scale(0.94); }
+    .send .i { width: 19px; height: 19px; }
+    .composer-hint { margin-top: 12px; font-size: 13.5px; color: var(--muted); }
+    .contacts { list-style: none; margin-top: 40px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; max-width: 820px; }
+    .contacts li { border-top: 1px solid var(--border-soft); }
+    .contacts li.wide { grid-column: 1 / -1; }
+    .contacts a, .contacts .static { display: flex; align-items: center; gap: 14px; padding: 15px 2px; }
+    .contacts .i { width: 18px; height: 18px; color: var(--muted); transition: color 0.2s var(--ease); }
+    .contacts .k { width: 84px; flex: none; font-size: 14px; color: var(--muted); }
+    .contacts .v { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); font-size: 15.5px; transition: color 0.2s var(--ease); }
+    .contacts a:hover .v { color: var(--text); }
+    .contacts a:hover .i { color: var(--accent-hi); }
+
+    footer { border-top: 1px solid var(--divider); }
+    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 28px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); }
+    .foot a:hover { color: var(--text); }
+
+    /* ---------- narrow screens ---------- */
+    @media (max-width: 1100px) {
+      :root { --rail: 188px; }
+      .phones { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    @media (max-width: 860px) {
+      .sec { grid-template-columns: minmax(0, 1fr); }
+      .rail { border-right: 0; padding: 52px 0 0; border-top: 1px solid var(--border); }
+      .sec.first .rail { border-top: 0; }
+      .rail h2 { position: static; font-size: 14px; color: var(--muted); }
+      .body { padding: 14px 0 52px; border-top: 0; }
+      .sb-cols { grid-template-columns: minmax(0, 1fr); max-width: 640px; }
+      .phones {
+        display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px;
+        margin-left: calc(var(--pad) * -1); margin-right: calc(var(--pad) * -1);
+        padding: 4px var(--pad) 28px; scrollbar-width: none;
+      }
+      .phones::-webkit-scrollbar { display: none; }
+      .phones figure { flex: 0 0 62%; max-width: 300px; scroll-snap-align: center; }
+      .talk { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+      .thumb { max-width: 520px; }
+      .contacts { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 16px; }
+      .hero { padding-bottom: 64px; }
+      .avatar { width: 96px; height: 96px; margin-bottom: 24px; }
+      .roles .seg { display: block; }
+      .roles .dot { display: none; }
+      .socials { gap: 6px; }
+      .social { padding: 6px 11px 6px 9px; font-size: 13px; gap: 7px; }
+      .pill { height: 48px; padding: 0 20px; }
+      .head { grid-template-columns: minmax(0, 1fr); }
+      .head .when { grid-column: 1; grid-row: auto; margin-top: 4px; }
+      .logo-row img { height: 32px; }
+      .kv { grid-template-columns: minmax(0, 1fr); }
+      .kv dt { margin-bottom: 6px; }
+      .writing li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+      .bench { padding: 20px 18px 16px; }
+      .bar { grid-template-columns: 60px minmax(0, 1fr) 64px; gap: 10px; }
+      .code { font-size: 13px; }
+    }
+  </style>
 </head>
-
 <body>
+  <a class="skip" href="#main">Skip to content</a>
 
-    <!-- ════ NAV ════ -->
-    <nav id="nav">
-        <div class="nav-inner">
-            <div class="logo">FC<span>.</span></div>
-            <button class="burger" id="burger" aria-label="Menu"><i class="fas fa-bars"></i></button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#publications">Articles</a></li>
-                <li><a href="#contact" class="nav-cta">Contact</a></li>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path class="i-stroke" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path class="i-stroke" d="M7 17 17 7M8.5 7H17v8.5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path class="i-stroke" d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h4"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path class="i-stroke" d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect class="i-stroke" x="3" y="5" width="18" height="14" rx="2.5"/><path class="i-stroke" d="m4 7 8 6 8-6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path class="i-stroke" d="M6.6 3.5h2.8l1.5 4.2-2 1.4a12 12 0 0 0 6 6l1.4-2 4.2 1.5v2.8a2 2 0 0 1-2.1 2A16.5 16.5 0 0 1 4.6 5.6a2 2 0 0 1 2-2.1z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle class="i-stroke" cx="12" cy="12" r="9"/><path class="i-stroke" d="M3 12h18M12 3c2.4 2.5 3.6 5.5 3.6 9s-1.2 6.5-3.6 9c-2.4-2.5-3.6-5.5-3.6-9S9.6 5.5 12 3z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect class="i-stroke" x="9" y="9" width="11" height="11" rx="2.2"/><path class="i-stroke" d="M15 5.5V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path class="i-stroke" d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path class="i-fill" d="M8 5.2v13.6a.8.8 0 0 0 1.2.7l10.6-6.8a.8.8 0 0 0 0-1.4L9.2 4.5A.8.8 0 0 0 8 5.2z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect class="i-fill" x="6.5" y="5" width="4" height="14" rx="1.2"/><rect class="i-fill" x="13.5" y="5" width="4" height="14" rx="1.2"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path class="i-stroke" d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path class="i-stroke" d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path class="i-stroke" d="M12 19V5M6 11l6-6 6 6" style="stroke-width:2.2"/></symbol>
+    <symbol id="i-github" viewBox="0 0 16 16"><path class="i-fill" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path class="i-fill" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path class="i-fill" d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.49h2.04L6.49 3.24H4.3l13.31 17.4z"/></symbol>
+    <symbol id="i-medium" viewBox="0 0 24 24"><path class="i-fill" d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></symbol>
+    <symbol id="i-youtube" viewBox="0 0 24 24"><path class="i-fill" d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.87.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></symbol>
+    <symbol id="i-apple" viewBox="0 0 24 24"><path class="i-fill" d="M12.15 6.9c-.95 0-2.42-1.08-3.96-1.04-2.04.03-3.91 1.18-4.96 3.01-2.12 3.68-.55 9.1 1.52 12.09 1.01 1.45 2.2 3.09 3.79 3.04 1.52-.07 2.09-.99 3.94-.99 1.83 0 2.35.99 3.96.95 1.64-.03 2.68-1.48 3.68-2.95 1.15-1.69 1.63-3.32 1.66-3.41-.04-.02-3.18-1.22-3.22-4.86-.03-3.04 2.48-4.49 2.6-4.56-1.43-2.09-3.63-2.32-4.39-2.38-2-.15-3.68 1.09-4.62 1.09zm3.38-3.07c.84-1.01 1.4-2.43 1.25-3.83-1.21.05-2.66.8-3.53 1.82-.78.9-1.46 2.34-1.27 3.71 1.34.11 2.71-.69 3.55-1.7z"/></symbol>
+    <symbol id="i-play-store" viewBox="0 0 24 24"><path class="i-fill" d="m22.02 13.3-3.92 2.22-3.52-3.5 3.55-3.52 3.89 2.2a1.49 1.49 0 0 1 0 2.6zM1.34.92a1.49 1.49 0 0 0-.12.57v21.02c0 .22.05.42.13.6l11.15-11.09L1.34.92zm12.2 10.07 3.26-3.24L3.45.2a1.47 1.47 0 0 0-.95-.18l11.04 10.97zm0 2.06-11 10.94c.3.03.61-.02.9-.19l13.33-7.54-3.23-3.21z"/></symbol>
+    <symbol id="i-ph" viewBox="0 0 24 24"><path class="i-fill" d="M13.6 8.4h-3.4V12h3.4a1.8 1.8 0 1 0 0-3.6zM12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm1.6 14.4h-3.4V18H7.8V6h5.8a4.2 4.2 0 1 1 0 8.4z"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="top-inner">
+      <a class="brand" href="#top" aria-label="Federico Cesarini, back to the top">
+        <img src="1742824917112.jpeg" width="28" height="28" alt="">
+        <span>Federico Cesarini</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="#profile">Profile</a>
+        <a href="#crow">CROW</a>
+        <a href="#secondbrain">SecondBrain</a>
+        <a href="#experience">Experience</a>
+        <a href="#writing">Writing</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="top-right">
+        <a class="icon-btn icon-cv" href="assets/Federico_Cesarini_AI_Engineer_CV_2026.pdf" aria-label="CV, PDF" title="CV (PDF)"><svg class="i"><use href="#i-file"/></svg></a>
+        <a class="bar-cta" href="#contact" aria-label="Get in touch"><svg class="i" style="width:15px;height:15px" aria-hidden="true"><use href="#i-mail"/></svg><span>Get in touch</span></a>
+        <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open the menu">
+          <svg class="i i-open"><use href="#i-menu"/></svg><svg class="i i-close"><use href="#i-close"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <nav class="sheet" id="menu" hidden aria-label="Menu">
+    <a href="#profile">Profile</a>
+    <a href="#crow">CROW</a>
+    <a href="#secondbrain">SecondBrain</a>
+    <a href="#experience">Experience</a>
+    <a href="#writing">Writing</a>
+    <a href="#talks">Talks &amp; teaching</a>
+    <a href="#contact">Contact</a>
+    <a href="assets/Federico_Cesarini_AI_Engineer_CV_2026.pdf">CV (PDF)</a>
+  </nav>
+
+  <section class="hero" id="top" aria-label="Introduction">
+    <canvas data-brain data-seed="7" aria-hidden="true"></canvas>
+    <div class="hero-inner" data-brain-clear>
+      <img class="avatar rise" src="1742824917112.jpeg" width="112" height="112" alt="Federico Cesarini" fetchpriority="high">
+      <h1 class="rise rise-1">Federico Cesarini</h1>
+      <p class="claim rise rise-2"><b>I build memory systems</b> for agents, and humans.</p>
+      <p class="roles rise rise-3"><span class="seg">AI Engineer &amp; Consultant</span><span class="dot" aria-hidden="true">·</span><span class="seg">Solo Founder, SecondBrain</span><span class="dot" aria-hidden="true">·</span><span class="seg">Bergamo, Italy</span></p>
+      <div class="cta rise rise-4">
+        <a class="pill pill-white" href="#contact">Get in touch <svg class="i"><use href="#i-arrow"/></svg></a>
+        <a class="pill pill-dark" href="assets/Federico_Cesarini_AI_Engineer_CV_2026.pdf"><svg class="i"><use href="#i-file"/></svg>CV (PDF)</a>
+      </div>
+      <div class="socials rise rise-5">
+        <a class="social" href="https://www.linkedin.com/in/federico-cesarini-4a9482209" rel="me noopener" target="_blank"><svg class="i"><use href="#i-linkedin"/></svg>LinkedIn</a>
+        <a class="social" href="https://github.com/fed3c3sa" rel="me noopener" target="_blank"><svg class="i"><use href="#i-github"/></svg>GitHub</a>
+        <a class="social" href="https://x.com/fed3c3sa" rel="me noopener" target="_blank"><svg class="i"><use href="#i-x"/></svg>X</a>
+        <a class="social" href="https://medium.com/@mail.fede.cesarini" rel="me noopener" target="_blank"><svg class="i"><use href="#i-medium"/></svg>Medium</a>
+      </div>
+    </div>
+  </section>
+
+  <main id="main">
+    <div class="wrap">
+
+      <section class="sec first" id="profile" aria-labelledby="h-profile">
+        <div class="rail"><h2 id="h-profile">Profile</h2></div>
+        <div class="body">
+          <p class="lede">AI engineer and consultant. I build memory systems for agentic AI and, more broadly, generative AI products that run in production, from the agents people talk to down to the cloud infrastructure underneath.</p>
+          <div class="prose">
+            <p>At <a href="https://www.tinextainnovationhub.com/" target="_blank" rel="noopener">Tinexta</a> I lead the engineering of the main AI features of <a href="https://www.lextel.ai/" target="_blank" rel="noopener">Lextel.ai</a>, a platform for legal professionals: deep research, document generation and an agentic legal chat. On the memory side, I built <a href="#secondbrain">SecondBrain</a>, an AI memory app with paying subscribers on the App Store and Google Play, and, together with Marco Sassarini, <a href="#crow">CROW</a>, a paper and open-source project that makes knowledge bases maintained by language models cheaper and more accurate.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="crow" aria-labelledby="h-crow">
+        <div class="rail"><h2 id="h-crow">Research &amp; open source</h2></div>
+        <div class="body">
+          <article class="entry">
+            <div class="head head-logo">
+              <h3 class="logo-row"><img src="assets/img/crow.webp" width="56" height="40" alt="">CROW: Classifier-Routed Organization of LLM Wikis</h3>
+              <span class="when">Sep 2026</span>
+              <p class="org">First author, with <a class="link" href="https://github.com/sassarini-marco" target="_blank" rel="noopener">Marco Sassarini</a> <span class="note">· paper, open-source implementation and desktop app</span></p>
+            </div>
+            <div class="chips">
+              <a class="chip" href="https://doi.org/10.5281/zenodo.23260209" target="_blank" rel="noopener"><b>Paper</b><span>doi.org/10.5281/zenodo.23260209</span></a>
+              <a class="chip" href="https://github.com/crow-hq/llm-wiki-v2" target="_blank" rel="noopener"><b>Code</b><span>github.com/crow-hq/llm-wiki-v2</span></a>
+              <a class="chip" href="https://github.com/crow-hq/crow-desktop" target="_blank" rel="noopener"><b>Desktop app</b><span>github.com/crow-hq/crow-desktop</span></a>
+              <a class="chip" href="https://pypi.org/project/llmwiki2/" target="_blank" rel="noopener"><b>PyPI</b><span>llmwiki2</span></a>
+            </div>
+            <div class="prose crow-prose">
+              <p>In an LLM wiki, a language model files documents into a tree of notes and answers questions from them, but every small decision, such as where a document belongs or which note to read, costs a model call. CROW hands those decisions to a fast, cheap classifier and keeps the language model only for writing.</p>
+              <p>On 525 real documents, compared with the same pipeline driven by a language model, CROW added documents at half the cost and in half the time (18 s instead of 39 s each), and found the right note for a question 89% of the time instead of 62%, about twice as fast.</p>
+            </div>
+
+            <figure class="bench" aria-labelledby="bench-title">
+              <figcaption>
+                <p class="bench-title" id="bench-title">CROW against the same wiki run only by a language model</p>
+                <p class="bench-sub">Per document added, and per question asked</p>
+              </figcaption>
+              <div class="metric">
+                <p class="metric-name">Right note read <small>higher is better</small></p>
+                <div class="bars">
+                  <div class="bar crow"><span>CROW</span><span class="track"><i class="fill" style="--w:89%"></i></span><b>89%</b></div>
+                  <div class="bar base"><span>LLM only</span><span class="track"><i class="fill" style="--w:62%"></i></span><b>62%</b></div>
+                </div>
+              </div>
+              <div class="metric">
+                <p class="metric-name">Time to add a document <small>lower is better</small></p>
+                <div class="bars">
+                  <div class="bar crow"><span>CROW</span><span class="track"><i class="fill" style="--w:47.7%"></i></span><b>18.4 s</b></div>
+                  <div class="bar base"><span>LLM only</span><span class="track"><i class="fill" style="--w:100%"></i></span><b>38.6 s</b></div>
+                </div>
+              </div>
+              <div class="metric">
+                <p class="metric-name">LLM tokens to add a document <small>lower is better</small></p>
+                <div class="bars">
+                  <div class="bar crow"><span>CROW</span><span class="track"><i class="fill" style="--w:31.8%"></i></span><b>5,508</b></div>
+                  <div class="bar base"><span>LLM only</span><span class="track"><i class="fill" style="--w:100%"></i></span><b>17,324</b></div>
+                </div>
+              </div>
+              <p class="bench-note">From the CROW paper and the llm-wiki-v2 benchmark: 2.1× faster and 68% fewer LLM tokens per document.</p>
+            </figure>
+
+            <div class="prose">
+              <p>The cost of each new document stays flat as the wiki grows, and a cost model built on these measurements keeps it at about $0.006 per document up to a million documents.</p>
+              <p>The open-source implementation, which I maintain, is a wiki of plain Markdown files that runs on your own computer with any AI provider, Ollama included, and cites its sources. It can also be the long-term memory of Claude Code, Codex or any MCP client.</p>
+            </div>
+          </article>
+
+          <article class="entry desk">
+            <div class="head">
+              <h3>Crow, the desktop app</h3>
+              <span class="when">Since Oct 2026</span>
+              <p class="org">Free for macOS, Windows and Linux <span class="note">· made with Tauri and React, on top of llm-wiki-v2</span></p>
+            </div>
+            <div class="prose" style="margin-top:14px">
+              <p>Crow turns the documents already on your computer into a second brain. It finds PDFs, Word files, slides and spreadsheets by itself, files them into a wiki of linked Markdown notes and answers questions citing the notes it used, which light up in the brain. One button connects it to Claude, Claude Code, ChatGPT or Codex as their memory.</p>
+            </div>
+            <figure class="window">
+              <div class="window-bar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="window-title">Crow</span></div>
+              <video data-demo muted loop playsinline preload="metadata" poster="assets/media/crow-desktop-ask-poster.webp" width="960" height="600" aria-hidden="true">
+                <source src="assets/media/crow-desktop-ask.webm" type="video/webm">
+                <source src="assets/media/crow-desktop-ask.mp4" type="video/mp4">
+              </video>
+              <button class="vid-toggle" type="button" data-demo-toggle aria-label="Play the demo">
+                <svg class="i i-play"><use href="#i-play"/></svg><svg class="i i-pause"><use href="#i-pause"/></svg>
+              </button>
+            </figure>
+            <p class="caption">Crow answering a question about two kitchen quotes: the answer cites its notes, and the brain beside it shows where they live.</p>
+            <div class="actions">
+              <a class="pill pill-white" href="https://github.com/crow-hq/crow-desktop/releases/latest" target="_blank" rel="noopener"><svg class="i"><use href="#i-down"/></svg>Download Crow</a>
+              <span class="code"><span class="prompt">$</span>pip install llmwiki2<button class="copy" type="button" data-copy="pip install llmwiki2" aria-label="Copy pip install llmwiki2"><svg class="i i-copy"><use href="#i-copy"/></svg><svg class="i i-check"><use href="#i-check"/></svg></button></span>
+            </div>
+            <p class="traction">With no paid ads, by November 2026: <b>250+ stars</b> and <b>40+ forks</b> on GitHub, <b>about 3,000 downloads</b> on PyPI and <b>about 3,000 views</b> of the paper.</p>
+          </article>
+        </div>
+      </section>
+
+    </div>
+
+    <section class="sb" id="secondbrain" aria-labelledby="h-sb">
+      <div class="wrap">
+        <div class="sb-head">
+          <p class="sb-brand"><img src="assets/img/secondbrain-mark-dark.webp" width="30" height="26" alt="">SecondBrain</p>
+          <h2 id="h-sb">Just talk.<br><span>SecondBrain remembers.</span></h2>
+          <p class="sb-lead">An AI memory app for iPhone, Android and the web, designed, built and launched as a one-person project, first on the App Store and then on Google Play. It is live on both today, with paying subscribers.</p>
+          <div class="sb-cta">
+            <a class="sb-btn primary" href="https://apps.apple.com/us/app/secondbrain-ai-memory/id6762130376" target="_blank" rel="noopener"><svg class="i"><use href="#i-apple"/></svg>App Store</a>
+            <a class="sb-btn" href="https://play.google.com/store/apps/details?id=app.secondbrain.android" target="_blank" rel="noopener"><svg class="i"><use href="#i-play-store"/></svg>Google Play</a>
+            <a class="sb-btn" href="https://app.secondbrainmemory.com/" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg>Web app</a>
+          </div>
+          <p class="meta">Solo founder and builder: engineering, product, design and growth<span class="dot">·</span><span class="num">since 2026</span></p>
+        </div>
+
+        <div class="phones">
+          <figure><img src="assets/img/secondbrain-record.webp" width="720" height="1558" loading="lazy" decoding="async" alt="SecondBrain's record screen: just speak your mind."></figure>
+          <figure><img src="assets/img/secondbrain-brain.webp" width="720" height="1558" loading="lazy" decoding="async" alt="SecondBrain's brain view: every note filed, watch your brain grow."></figure>
+          <figure><img src="assets/img/secondbrain-ask.webp" width="720" height="1558" loading="lazy" decoding="async" alt="Asking SecondBrain about your notes and calendar."></figure>
+          <figure><img src="assets/img/secondbrain-today.webp" width="720" height="1558" loading="lazy" decoding="async" alt="SecondBrain's Today view: your whole day, sorted."></figure>
+        </div>
+
+        <div class="sb-cols">
+          <div>
+            <h3>What it does</h3>
+            <p>You talk to it and it writes a titled note, files it in the right folder and turns what you said into calendar events and reminders; voice messages shared from WhatsApp work the same way. It also gives Claude, ChatGPT, Gemini and Cursor one shared memory built on your own notes, through an MCP connector that is available as a Claude Code plugin too.</p>
+          </div>
+          <div>
+            <h3>How it is built</h3>
+            <p>The backend runs on Supabase, with an AI agent that shows its progress live, switches to another model when one fails so no note is lost, and keeps working offline. More than 15 updates so far, up to version 2.8.0, in five languages and with Markdown export so users can always take their notes with them; onboarding, free trials and the paywall were reworked around how users actually behaved.</p>
+          </div>
+          <div>
+            <h3>How it grows</h3>
+            <span class="when">Founder-led growth, since Jun 2026</span>
+            <p>All of the marketing, from making the ads to deciding where the budget goes: more than 150 ads so far, from creator-style videos and graphics to short vertical videos, and campaigns on Instagram and Facebook steered by a self-built dashboard that puts ad spend, subscriptions and payments side by side, to keep only the ads that pay for themselves. Growth without paid ads as well: the app's Instagram, a website easy to find on Google and in AI assistants such as ChatGPT, the store listings and Reddit communities.</p>
+          </div>
+        </div>
+
+        <div class="sb-links">
+          <a href="https://secondbrainmemory.com/" target="_blank" rel="noopener">secondbrainmemory.com<svg class="i"><use href="#i-out"/></svg></a>
+          <a href="https://github.com/fed3c3sa/secondbrain-shared-memory" target="_blank" rel="noopener">Shared memory plugin on GitHub<svg class="i"><use href="#i-out"/></svg></a>
+          <a href="https://www.producthunt.com/products/secondbrain" target="_blank" rel="noopener">Product Hunt<svg class="i"><use href="#i-out"/></svg></a>
+          <a href="https://www.youtube.com/@SecondBrainAPP" target="_blank" rel="noopener">YouTube channel<svg class="i"><use href="#i-out"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+
+      <section class="sec first" id="experience" aria-labelledby="h-exp">
+        <div class="rail"><h2 id="h-exp">Experience</h2></div>
+        <div class="body">
+          <article class="entry">
+            <div class="head">
+              <h3>AI Engineer &amp; Cloud Architect</h3>
+              <span class="when">Since Feb 2025</span>
+              <p class="org"><a class="link" href="https://www.tinextainnovationhub.com/" target="_blank" rel="noopener">Tinexta Innovation Hub</a> <span class="note">· <a class="link" href="https://www.lextel.ai/" target="_blank" rel="noopener">Lextel.ai</a></span></p>
+            </div>
+            <ul class="points">
+              <li>Led the development of the main AI features of Lextel.ai: Legal Deep Research, AI document generation and an agentic legal chat.</li>
+              <li>Redesigned the document ingestion pipeline on Kubernetes so that it scales with the workload, doubling its throughput, and added Celery to process large volumes of data in parallel.</li>
+              <li>Built the retrieval (RAG) pipelines that let the AI answer from legal and patent documents, including the Kubernetes pipeline that splits, embeds and indexes them, monitored with Grafana and Prometheus.</li>
+              <li>Ran the Elasticsearch clusters and tuned their queries, deployed machine-learning models inside them with Eland and benchmarked them with ES Rally.</li>
+              <li>Mentored junior developers and helped them become productive faster.</li>
             </ul>
-        </div>
-    </nav>
-
-    <!-- ════ HERO ════ -->
-    <section id="home" class="hero">
-        <div class="hero-mesh"></div>
-        <div class="hero-grid"></div>
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-
-        <div class="hero-content">
-            <br>
-            <br>
-
-            <div class="avatar-wrap">
-                <div class="avatar-glow"></div>
-                <div class="avatar-ring"></div>
-                <img src="https://i.ibb.co/9jjhnL8/1742824917112.jpg" alt="Federico Cesarini">
+          </article>
+          <article class="entry">
+            <div class="head">
+              <h3>Software Engineer &amp; Cloud Architect</h3>
+              <span class="when">Dec 2021 to Feb 2025</span>
+              <p class="org">Warrant Hub <span class="note">· Bergamo</span></p>
             </div>
-
-            <h1>Federico <span class="accent">Cesarini</span></h1>
-            <h2>AI Engineer</h2>
-            <p class="hero-desc">I design and ship production AI systems that solve real problems. My expertise covers the full modern AI stack: deploying and fine-tuning LLMs on Google Cloud, building RAG pipelines for large-scale information retrieval, architecting Kubernetes infrastructure with autoscaling, and engineering high-performance search with Elasticsearch. I regularly write about practical AI engineering on Medium.</p>
-
-            <div class="hero-btns">
-                <a href="#contact" class="btn btn-fill"><i class="fas fa-paper-plane"></i> Get in Touch</a>
-                <a href="#projects" class="btn btn-ghost"><i class="fas fa-code"></i> View Projects</a>
-                <a href="https://medium.com/@mail.fede.cesarini" target="_blank" class="btn btn-ghost"><i
-                        class="fab fa-medium"></i> Read Articles</a>
+            <ul class="points">
+              <li>Built the Google Cloud infrastructure used to process patent data at scale.</li>
+              <li>Trained named-entity recognition models that extract material information from patents with 85% accuracy, and built the pipeline that reads unstructured patent text.</li>
+              <li>Designed the Elasticsearch databases that make patents searchable both by keyword and by meaning.</li>
+              <li>Built Django backends and Kubernetes pipelines that automate data processing.</li>
+            </ul>
+          </article>
+          <article class="entry">
+            <div class="head">
+              <h3>Software Developer</h3>
+              <span class="when">Jun 2020 to Oct 2020</span>
+              <p class="org">GestApp srl <span class="note">· Bergamo</span></p>
             </div>
-        </div>
-
-    </section>
-
-    <!-- ════ ABOUT ════ -->
-    <section id="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="rv">
-                    <div class="section-label">About Me</div>
-                    <h2 class="section-title">Engineering the next wave of AI systems</h2>
-                    <div class="about-text">
-                        <p>I'm an AI Engineer at <a href="https://www.tinexta.com/" target="_blank">Tinexta Innovation Hub</a>, where I build production-grade AI systems. I led the development of core AI features for <a href="https://www.lextel.ai/" target="_blank">Lextel.ai</a>, a Visura product, including Legal Deep Research, AI-powered Document Generation, and Agentic Legal Chat.</p>
-                        <p>My expertise spans the full AI stack: from deploying and fine-tuning LLMs on Kubernetes with autoscaling, to building RAG pipelines for large-scale retrieval, to engineering high-performance Elasticsearch clusters for vector and hybrid search.</p>
-                        <p>I hold a B.Sc. in Computer Engineering from Universita degli studi di Bergamo, and I regularly write on <a href="https://medium.com/@mail.fede.cesarini" target="_blank">Medium</a> about practical AI engineering topics.</p>
-                    </div>
-                </div>
-                <div class="skills-wrap rv rv-d1">
-                    <div class="skill-card">
-                        <h3><i class="fas fa-brain"></i> AI &amp; Generative AI</h3>
-                        <div class="tags">
-                            <span class="tag">RAG</span><span class="tag">Agentic AI</span>
-                            <span class="tag">LLM / SLM Deploy</span><span class="tag">GPT</span>
-                            <span class="tag">Gemini</span><span class="tag">OpenAI Agents SDK</span>
-                            <span class="tag">Google ADK</span><span class="tag">SmolAgents</span>
-                            <span class="tag">NER</span><span class="tag">Fine-tuning</span>
-                            <span class="tag">vLLM</span>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <h3><i class="fas fa-cloud"></i> Cloud &amp; Infrastructure</h3>
-                        <div class="tags">
-                            <span class="tag">GCP</span><span class="tag">Kubernetes (GKE)</span>
-                            <span class="tag">KEDA</span><span class="tag">Cloud Run</span>
-                            <span class="tag">Cloud Functions</span><span class="tag">App Engine</span>
-                            <span class="tag">Datastore</span><span class="tag">Docker</span>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <h3><i class="fas fa-magnifying-glass"></i> Search &amp; Data</h3>
-                        <div class="tags">
-                            <span class="tag">Elasticsearch</span><span class="tag">Vector Search</span>
-                            <span class="tag">Hybrid Queries</span><span class="tag">Eland</span>
-                            <span class="tag">ES Rally</span><span class="tag">Text Vectorization</span>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <h3><i class="fas fa-terminal"></i> Development &amp; Ops</h3>
-                        <div class="tags">
-                            <span class="tag">Python</span><span class="tag">Django</span>
-                            <span class="tag">FastAPI</span><span class="tag">Celery</span>
-                            <span class="tag">RabbitMQ</span><span class="tag">Redis</span>
-                            <span class="tag">Prometheus</span><span class="tag">Grafana</span>
-                            <span class="tag">Linux / Bash</span>
-                        </div>
-                    </div>
-                </div>
+            <ul class="points">
+              <li>Wrote C# and VB.NET backend code and business logic for enterprise applications.</li>
+            </ul>
+          </article>
+          <article class="entry">
+            <div class="head">
+              <h3>Retail Employee</h3>
+              <span class="when">Aug 2019 to Jan 2020</span>
+              <p class="org">Apple Inc. <span class="note">· customer service and technical support in an Apple Store</span></p>
             </div>
+          </article>
         </div>
-    </section>
+      </section>
 
-    <!-- ════ EXPERIENCE ════ -->
-    <section id="experience" class="alt-bg">
-        <div class="container">
-            <div class="section-label rv">Career</div>
-            <h2 class="section-title rv">Professional Experience</h2>
-            <p class="section-desc rv">From cloud infrastructure to production AI systems.</p>
+      <section class="sec" id="skills" aria-labelledby="h-skills">
+        <div class="rail"><h2 id="h-skills">Core competencies</h2></div>
+        <div class="body">
+          <dl class="kv"><dt>AI &amp; Agents</dt><dd>Memory for agents, retrieval-augmented (RAG) systems and agents that call tools and connect to other apps through MCP, along with deploying and fine-tuning both large and small language models, from Gemini and GPT to open-source ones, with frameworks such as the OpenAI Agents SDK, Google ADK and SmolAgents.</dd></dl>
+          <dl class="kv"><dt>Cloud &amp; Data</dt><dd>Most production work runs on Google Cloud, with Kubernetes that scales with the workload, Cloud Run and Cloud Functions, and vLLM to serve models, alongside Elasticsearch clusters for keyword and semantic search; my own products run on Supabase.</dd></dl>
+          <dl class="kv"><dt>Engineering</dt><dd>Python with Django and FastAPI on the backend, TypeScript with React Native and Expo for mobile apps, Celery, RabbitMQ and Redis for background work, Docker for packaging, Prometheus and Grafana for monitoring, and the full release cycle on the App Store and Google Play.</dd></dl>
+          <dl class="kv"><dt>Growth</dt><dd>Making ads and running campaigns on Instagram and Facebook, keeping apps easy to find in the stores, on Google and in AI assistants, and deciding where to spend by comparing what a paying user costs with what they bring in.</dd></dl>
+        </div>
+      </section>
 
-            <div class="timeline">
-                <div class="exp-card rv">
-                    <div class="exp-top">
-                        <div>
-                            <div class="exp-role">AI Engineer</div>
-                            <div class="exp-company"><a href="https://www.tinexta.com/" target="_blank">Tinexta Innovation Hub</a></div>
-                        </div>
-                        <div class="exp-date">Feb 2025 - Present</div>
-                    </div>
-                    <div class="lextel-banner">
-                        <div class="lextel-icon"><i class="fas fa-scale-balanced"></i></div>
-                        <div class="lextel-info">
-                            <h4>Led core AI features for <a href="https://www.lextel.ai/" target="_blank">Lextel.ai</a> (a Visura product)</h4>
-                            <p>Led the development of major AI functionality powering the legal platform.</p>
-                            <div class="lextel-tags">
-                                <span class="ltag r">Legal Deep Research</span>
-                                <span class="ltag d">Document Generation</span>
-                                <span class="ltag c">Agentic Legal Chat</span>
-                            </div>
-                        </div>
-                    </div>
-                    <ul class="exp-list">
-                        <li>Architected Kubernetes ingestion pipeline with KEDA autoscaling, <span
-                                class="highlight">increasing speed by 100%</span></li>
-                        <li>Implemented Celery into K8s pipeline enabling parallel processing of vast data volumes</li>
-                        <li>Developed and deployed generative AI solutions for legal and patent data analysis</li>
-                        <li>Created and optimized RAG pipelines for improved retrieval from legal documents</li>
-                        <li>Led Elasticsearch cluster operations, engineering queries to boost retrieval performance
-                        </li>
-                        <li>Deployed ML models to Elasticsearch using Eland</li>
-                        <li>Benchmarked production Elasticsearch clusters using ES Rally</li>
-                        <li>Mentored junior developers, accelerating onboarding</li>
-                    </ul>
-                </div>
+      <section class="sec" id="projects" aria-labelledby="h-projects">
+        <div class="rail"><h2 id="h-projects">Other projects</h2></div>
+        <div class="body">
+          <ul class="rows">
+            <li>
+              <p class="row-title"><a href="https://github.com/fed3c3sa/nlq_translator" target="_blank" rel="noopener">Elasticsearch Natural Language Query</a><a class="repo" href="https://github.com/fed3c3sa/nlq_translator" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">github.com/fed3c3sa/nlq_translator</a></p>
+              <p>A service that lets you question Elasticsearch in plain language: GPT writes the query and refines it, using the structure of the index as context.</p>
+            </li>
+            <li>
+              <p class="row-title"><a href="https://github.com/fed3c3sa/linkAIin" target="_blank" rel="noopener">linkAIin, LinkedIn AI Auto-Poster</a><a class="repo" href="https://github.com/fed3c3sa/linkAIin" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">github.com/fed3c3sa/linkAIin</a></p>
+              <p>A Google Cloud Function that researches, writes and publishes LinkedIn posts with GPT, optionally with DALL-E images, and tracks how they perform.</p>
+            </li>
+            <li>
+              <p class="row-title"><a href="https://github.com/fed3c3sa/claude-cad" target="_blank" rel="noopener">Claude CAD</a><a class="repo" href="https://github.com/fed3c3sa/claude-cad" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">github.com/fed3c3sa/claude-cad</a></p>
+              <p>A CAD toolkit for Claude: parametric parts, technical drawings, DXF files and 3D-print preparation, exported as real STEP, STL, 3MF, DXF and SVG files, in Claude Code, Claude Desktop and Cowork.</p>
+            </li>
+            <li>
+              <p class="row-title"><a href="https://github.com/fed3c3sa/claude-code-genai-prompt-optimizer" target="_blank" rel="noopener">GenAI Prompt Optimizer</a><a class="repo" href="https://github.com/fed3c3sa/claude-code-genai-prompt-optimizer" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">github.com/fed3c3sa/claude-code-genai-prompt-optimizer</a></p>
+              <p>A Claude Code skill that moves a GenAI app from an expensive model to a cheaper one without losing quality: it builds an adversarial test suite, records the strong model's answers and tunes the prompts until the lighter model matches them.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
 
-                <div class="exp-card rv">
-                    <div class="exp-top">
-                        <div>
-                            <div class="exp-role">Software Engineer</div>
-                            <div class="exp-company">Warrant Hub</div>
-                        </div>
-                        <div class="exp-date">Dec 2021 - Feb 2025</div>
-                    </div>
-                    <ul class="exp-list">
-                        <li>Developed GCP infrastructure solutions for scalable data processing</li>
-                        <li>Trained NER models for material extraction from patent data, <span
-                                class="highlight">achieving 85% accuracy</span></li>
-                        <li>Created NLP text ingestion solutions for unstructured patent information</li>
-                        <li>Designed Elasticsearch text and vector databases for efficient retrieval</li>
-                        <li>Built Django backend systems for data processing applications</li>
-                        <li>Created Kubernetes pipelines for automated data processing workflows</li>
-                    </ul>
-                </div>
+      <section class="sec" id="writing" aria-labelledby="h-writing">
+        <div class="rail"><h2 id="h-writing">Writing</h2></div>
+        <div class="body">
+          <ul class="writing">
+            <li>
+              <time datetime="2026-09">Sep 2026</time>
+              <div>
+                <a class="t" href="https://doi.org/10.5281/zenodo.23260209" target="_blank" rel="noopener">CROW: Classifier-Routed Organization of LLM Wikis</a><span class="where">Paper</span>
+                <p>With Marco Sassarini, preprint on Zenodo.</p>
+              </div>
+            </li>
+            <li>
+              <time datetime="2026-09-17">Sep 2026</time>
+              <div>
+                <a class="t" href="https://medium.com/@mail.fede.cesarini/anche-tu-dopo-una-giornata-di-lavoro-con-lai-ti-senti-confuso-c225fe1d3eb1" target="_blank" rel="noopener" hreflang="it" lang="it">Anche tu, dopo una giornata di lavoro con l’AI, ti senti confuso?</a><span class="where">In Italian</span>
+                <p>Attention fragmentation, and why a day of work with AI can leave your head open on too many tabs.</p>
+              </div>
+            </li>
+            <li>
+              <time datetime="2026-02-12">Feb 2026</time>
+              <div>
+                <a class="t" href="https://medium.com/@mail.fede.cesarini/openai-frontier-the-missing-infrastructure-for-production-ai-agents-8ad8d07cc27c" target="_blank" rel="noopener">OpenAI Frontier: The Missing Infrastructure for Production AI Agents</a>
+                <p>Why the gap in enterprise AI is infrastructure, not model quality, and what a shared platform changes for agents in production.</p>
+              </div>
+            </li>
+            <li>
+              <time datetime="2025-12-04">Dec 2025</time>
+              <div>
+                <a class="t" href="https://medium.com/@mail.fede.cesarini/ner-in-the-llm-era-how-i-used-giant-models-to-train-tiny-ones-03b4b46a5b3c" target="_blank" rel="noopener">NER in the LLM Era: How I Used Giant Models to Train Tiny Ones</a>
+                <p>Knowledge distillation: large models label the data, so small named-entity models can do the work.</p>
+              </div>
+            </li>
+            <li>
+              <time datetime="2025-12-01">Dec 2025</time>
+              <div>
+                <a class="t" href="https://medium.com/@mail.fede.cesarini/why-small-language-models-will-eat-the-ai-world-and-how-to-orchestrate-them-322149bcc8d5" target="_blank" rel="noopener">Why Small Language Models Will Eat the AI World (And How to Orchestrate Them)</a>
+                <p>Small, specialized models often beat frontier ones on specific tasks; the hard part is orchestrating them.</p>
+              </div>
+            </li>
+            <li>
+              <time datetime="2025-11-28">Nov 2025</time>
+              <div>
+                <a class="t" href="https://medium.com/@mail.fede.cesarini/how-to-deploy-any-open-source-llm-on-google-cloud-without-owning-a-single-gpu-5167f91c0fd2" target="_blank" rel="noopener">How to Deploy Any Open-Source LLM on Google Cloud Without Owning a Single GPU</a>
+                <p>A complete guide to hosting models like Qwen-Coder on Kubernetes, with autoscaling and scale to zero.</p>
+              </div>
+            </li>
+            <li>
+              <time datetime="2025-11-07">Nov 2025</time>
+              <div>
+                <a class="t" href="https://medium.com/@mail.fede.cesarini/the-ai-memory-problem-why-rag-needs-to-evolve-into-something-more-5c3f34441ff0" target="_blank" rel="noopener">The AI Memory Problem: Why RAG Needs to Evolve Into Something More</a>
+                <p>Why persistent memory is the missing piece, and how retrieval has to grow into it.</p>
+              </div>
+            </li>
+            <li>
+              <time datetime="2025-11-06">Nov 2025</time>
+              <div>
+                <a class="t" href="https://medium.com/@mail.fede.cesarini/turn-your-fastapi-api-into-mcp-tools-in-minutes-f9c2a92066d7" target="_blank" rel="noopener">Turn Your FastAPI API into MCP Tools in Minutes</a>
+                <p>Exposing an existing FastAPI service to AI assistants as MCP tools, with FastMCP.</p>
+              </div>
+            </li>
+            <li>
+              <time datetime="2025-10-16">Oct 2025</time>
+              <div>
+                <a class="t" href="https://medium.com/@mail.fede.cesarini/how-to-deploy-an-slm-on-cloud-run-and-scale-to-zero-a381c3ee8794" target="_blank" rel="noopener">How to Deploy an SLM on Cloud Run and Scale to Zero</a>
+                <p>Self-hosting a small language model with Docker and Ollama on Cloud Run, paying only while it runs.</p>
+              </div>
+            </li>
+          </ul>
+          <p class="more"><a class="link" href="https://medium.com/@mail.fede.cesarini" target="_blank" rel="noopener">All articles on Medium</a></p>
+        </div>
+      </section>
 
-                <div class="exp-card rv">
-                    <div class="exp-top">
-                        <div>
-                            <div class="exp-role">Software Developer</div>
-                            <div class="exp-company">GestApp srl, Bergamo</div>
-                        </div>
-                        <div class="exp-date">Jun - Oct 2020</div>
-                    </div>
-                    <ul class="exp-list">
-                        <li>Developed backend solutions using C# and VB.NET</li>
-                        <li>Created and maintained business logic components for enterprise applications</li>
-                    </ul>
-                </div>
-
-                <div class="exp-card rv">
-                    <div class="exp-top">
-                        <div>
-                            <div class="exp-role">Retail Employee</div>
-                            <div class="exp-company">Apple Inc</div>
-                        </div>
-                        <div class="exp-date">Aug 2019 - Jan 2020</div>
-                    </div>
-                    <ul class="exp-list">
-                        <li>Provided exceptional customer service in an Apple Store environment</li>
-                        <li>Assisted customers with technical issues and product recommendations</li>
-                    </ul>
-                </div>
+      <section class="sec" id="talks" aria-labelledby="h-talks">
+        <div class="rail"><h2 id="h-talks">Talks &amp; teaching</h2></div>
+        <div class="body">
+          <article class="talk">
+            <a class="thumb" href="https://www.youtube.com/watch?v=LOfTKtfwc4I" target="_blank" rel="noopener" aria-label="Watch SecondBrain Podcast episode 1 on YouTube">
+              <img src="assets/img/podcast-ep1.webp" width="640" height="360" loading="lazy" decoding="async" alt="Federico Cesarini and Kevin Faggioli at two microphones">
+              <span class="play"><svg class="i"><use href="#i-play"/></svg><span class="num">40:57</span></span>
+            </a>
+            <div>
+              <h3><a href="https://www.youtube.com/watch?v=LOfTKtfwc4I" target="_blank" rel="noopener">AI Engineer: Developers Won't Exist in 5 Years (Do This)</a></h3>
+              <p class="org">SecondBrain Podcast, episode 1 · with Kevin Faggioli · Oct 2026</p>
+              <p>A conversation on AI and the future of work: whether AI will replace your job, building your own apps with Claude, what a $20 AI plan really costs, the AI bubble, and whether AI makes us more productive or just overwhelmed.</p>
             </div>
+          </article>
+          <div class="teach">
+            <h3>AI masterclasses and courses for companies</h3>
+            <p class="org">Organized by Tinexta Innovation Hub, and hands-on sessions with company teams</p>
+            <p>How language models really work, why they make things up, retrieval, agents and MCP, and how to put Claude to work on everyday tasks, explained without formulas or hype.</p>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- ════ PROJECTS ════ -->
-    <section id="projects">
-        <div class="container">
-            <div class="section-label rv">Portfolio</div>
-            <h2 class="section-title rv">Key Projects</h2>
-            <p class="section-desc rv">Open-source tools, production pipelines, and AI experiments.</p>
-
-            <div class="proj-grid">
-                <div class="proj-card rv">
-                    <div class="proj-icon"><i class="fab fa-linkedin-in"></i></div>
-                    <h3>linkAIin</h3>
-                    <p>Cloud Function that auto-generates LinkedIn content with GPT, web research, DALL-E images, and
-                        engagement analytics.</p>
-                    <div class="tags" style="margin-bottom:1rem">
-                        <span class="tag">Python</span><span class="tag">Cloud Functions</span><span
-                            class="tag">GPT</span><span class="tag">DALL-E</span>
-                    </div>
-                    <a href="https://github.com/federicocesarini/linkAIin" target="_blank" class="proj-link"><i
-                            class="fab fa-github"></i> Repository</a>
-                </div>
-
-                <div class="proj-card rv">
-                    <div class="proj-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
-                    <h3>ES Natural Language Query</h3>
-                    <p>GPT-powered engine that translates natural language into Elasticsearch queries using index
-                        mapping as context.</p>
-                    <div class="tags" style="margin-bottom:1rem">
-                        <span class="tag">Elasticsearch</span><span class="tag">GPT API</span><span
-                            class="tag">NLP</span>
-                    </div>
-                    <a href="https://github.com/federicocesarini/es-nlq" target="_blank" class="proj-link"><i
-                            class="fab fa-github"></i> Repository</a>
-                </div>
-
-                <div class="proj-card rv">
-                    <div class="proj-icon"><i class="fas fa-cubes"></i></div>
-                    <h3>Embeddings K8s Pipeline</h3>
-                    <p>GKE pipeline for Lextel.ai (Visura): chunking, vectorizing and indexing at scale with KEDA, Celery,
-                        RabbitMQ and Grafana monitoring.</p>
-                    <div class="tags" style="margin-bottom:1rem">
-                        <span class="tag">Kubernetes</span><span class="tag">Celery</span><span
-                            class="tag">RabbitMQ</span><span class="tag">Grafana</span>
-                    </div>
-                </div>
-
-                <div class="proj-card rv">
-                    <div class="proj-icon"><i class="fas fa-tags"></i></div>
-                    <h3>NER Material Model</h3>
-                    <p>spaCy NER model extracting materials and components from technical texts with high precision.</p>
-                    <div class="tags" style="margin-bottom:1rem">
-                        <span class="tag">spaCy</span><span class="tag">NER</span><span class="tag">ML</span><span
-                            class="tag">Python</span>
-                    </div>
-                </div>
-
-                <div class="proj-card rv">
-                    <div class="proj-icon"><i class="fas fa-diagram-project"></i></div>
-                    <h3>GCP Ingestion Pipeline</h3>
-                    <p>Multi-step pipeline with Cloud Functions, VMs, Datastores, and Cloud Run processing PDFs into
-                        NoSQL.</p>
-                    <div class="tags" style="margin-bottom:1rem">
-                        <span class="tag">GCP</span><span class="tag">Cloud Run</span><span class="tag">NoSQL</span>
-                    </div>
-                </div>
-
-                <div class="proj-card rv">
-                    <div class="proj-icon"><i class="fas fa-utensils"></i></div>
-                    <h3>Italian Recipes RAG Bot</h3>
-                    <p>Scraped and vectorized Italian recipe data, built a RAG chatbot for contextual cooking answers.
-                    </p>
-                    <div class="tags" style="margin-bottom:1rem">
-                        <span class="tag">RAG</span><span class="tag">Vector Search</span><span class="tag">GenAI</span>
-                    </div>
-                </div>
+      <section class="sec" id="education" aria-labelledby="h-edu">
+        <div class="rail"><h2 id="h-edu">Education &amp; languages</h2></div>
+        <div class="body">
+          <article class="entry">
+            <div class="head">
+              <h3>Bachelor of Science in Computer Engineering</h3>
+              <span class="when">Sep 2017 to Aug 2021</span>
+              <p class="org"><a class="link" href="https://www.unibg.it/" target="_blank" rel="noopener">Università degli Studi di Bergamo</a> <span class="note">· Bergamo</span></p>
             </div>
+          </article>
+          <p class="langs"><b>Languages.</b> Italian (native) · English (C1)</p>
         </div>
-    </section>
+      </section>
 
-    <!-- ════ PUBLICATIONS ════ -->
-    <section id="publications" class="alt-bg">
-        <div class="container">
-            <div class="section-label rv">Writing</div>
-            <h2 class="section-title rv">Medium Publications</h2>
-            <p class="section-desc rv">Practical AI engineering articles on LLM deployment, RAG, NER, and cloud
-                infrastructure.</p>
-
-            <div class="pub-grid">
-                <div class="pub-card rv">
-                    <div class="pub-img-wrap"><img class="pub-img"
-                            src="https://miro.medium.com/v2/resize:fit:1024/1*RZ2rTDW-8hFBC01vMgGSgQ.jpeg"
-                            alt="NER in the LLM Era" loading="lazy"></div>
-                    <div class="pub-body">
-                        <div class="pub-date">December 2025</div>
-                        <h3><a href="https://medium.com/@mail.fede.cesarini/ner-in-the-llm-era-how-i-used-giant-models-to-train-tiny-ones-03b4b46a5b3c"
-                                target="_blank">NER in the LLM Era: How I Used Giant Models to Train Tiny Ones</a></h3>
-                        <p class="pub-excerpt">Knowledge distillation techniques to train lightweight NER models using
-                            LLMs, reducing manual labeling effort dramatically.</p>
-                        <a href="https://medium.com/@mail.fede.cesarini/ner-in-the-llm-era-how-i-used-giant-models-to-train-tiny-ones-03b4b46a5b3c"
-                            target="_blank" class="pub-read">Read article <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <div class="pub-card rv">
-                    <div class="pub-img-wrap"><img class="pub-img"
-                            src="https://miro.medium.com/v2/resize:fit:1200/1*5vbbwWBxgD8xC9_F2ZzdjQ.jpeg"
-                            alt="Deploy LLM on GCP" loading="lazy"></div>
-                    <div class="pub-body">
-                        <div class="pub-date">November 2025</div>
-                        <h3><a href="https://medium.com/@mail.fede.cesarini/how-to-deploy-any-open-source-llm-on-google-cloud-without-owning-a-single-gpu-5167f91c0fd2"
-                                target="_blank">Deploy Any Open-Source LLM on Google Cloud Without a Single GPU</a></h3>
-                        <p class="pub-excerpt">Complete guide to deploying Qwen, Mistral, and Llama on GKE with vLLM,
-                            autoscaling and scale-to-zero.</p>
-                        <a href="https://medium.com/@mail.fede.cesarini/how-to-deploy-any-open-source-llm-on-google-cloud-without-owning-a-single-gpu-5167f91c0fd2"
-                            target="_blank" class="pub-read">Read article <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <div class="pub-card rv">
-                    <div class="pub-img-wrap"><img class="pub-img"
-                            src="https://miro.medium.com/v2/resize:fit:1200/1*KFUe2H8TFV2YLObAppHIaw.jpeg"
-                            alt="AI Memory Problem" loading="lazy"></div>
-                    <div class="pub-body">
-                        <div class="pub-date">November 2025</div>
-                        <h3><a href="https://medium.com/@mail.fede.cesarini/the-ai-memory-problem-why-rag-needs-to-evolve-into-something-more-5c3f34441ff0"
-                                target="_blank">The AI Memory Problem: Why RAG Needs to Evolve</a></h3>
-                        <p class="pub-excerpt">Why persistent memory is the missing piece in the AGI race and how
-                            next-gen RAG architectures are evolving.</p>
-                        <a href="https://medium.com/@mail.fede.cesarini/the-ai-memory-problem-why-rag-needs-to-evolve-into-something-more-5c3f34441ff0"
-                            target="_blank" class="pub-read">Read article <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <div class="pub-card rv">
-                    <div class="pub-img-wrap"><img class="pub-img"
-                            src="https://miro.medium.com/v2/resize:fit:1200/1*BFt1PXoSKD0F-ETovgF7tw.png"
-                            alt="SLM on Cloud Run" loading="lazy"></div>
-                    <div class="pub-body">
-                        <div class="pub-date">October 2025</div>
-                        <h3><a href="https://medium.com/@mail.fede.cesarini/how-to-deploy-an-slm-on-cloud-run-and-scale-to-zero-a381c3ee8794"
-                                target="_blank">Deploy an SLM on Cloud Run and Scale to Zero</a></h3>
-                        <p class="pub-excerpt">Self-host small language models with Docker and Ollama for full data
-                            privacy and pay-only-when-used.</p>
-                        <a href="https://medium.com/@mail.fede.cesarini/how-to-deploy-an-slm-on-cloud-run-and-scale-to-zero-a381c3ee8794"
-                            target="_blank" class="pub-read">Read article <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
+      <section class="sec" id="contact" aria-labelledby="h-contact">
+        <div class="rail"><h2 id="h-contact">Contact</h2></div>
+        <div class="body">
+          <p class="contact-lede">Consulting on memory systems and AI agents, talks, or a project together. <span>Write a line.</span></p>
+          <form class="composer" data-to="federico.cesarini.consulting@gmail.com" action="mailto:federico.cesarini.consulting@gmail.com" method="get">
+            <label class="vh" for="msg">Your message to Federico</label>
+            <textarea id="msg" name="body" rows="1" placeholder="Write to Federico…"></textarea>
+            <button class="send" type="submit" aria-label="Write the email"><svg class="i"><use href="#i-send"/></svg></button>
+          </form>
+          <p class="composer-hint">It opens your email app, addressed to federico.cesarini.consulting@gmail.com.</p>
+          <ul class="contacts">
+            <li class="wide"><a href="mailto:federico.cesarini.consulting@gmail.com"><svg class="i"><use href="#i-mail"/></svg><span class="k">Email</span><span class="v">federico.cesarini.consulting@gmail.com</span></a></li>
+            <li><a href="tel:+393920891327"><svg class="i"><use href="#i-phone"/></svg><span class="k">Phone</span><span class="v num">+39&nbsp;392&nbsp;089&nbsp;1327</span></a></li>
+            <li><a href="https://www.linkedin.com/in/federico-cesarini-4a9482209" target="_blank" rel="me noopener"><svg class="i"><use href="#i-linkedin"/></svg><span class="k">LinkedIn</span><span class="v">federico-cesarini-4a9482209</span></a></li>
+            <li><a href="https://github.com/fed3c3sa" target="_blank" rel="me noopener"><svg class="i"><use href="#i-github"/></svg><span class="k">GitHub</span><span class="v">fed3c3sa</span></a></li>
+            <li><a href="https://github.com/crow-hq" target="_blank" rel="noopener"><svg class="i"><use href="#i-github"/></svg><span class="k">CROW</span><span class="v">github.com/crow-hq</span></a></li>
+            <li><a href="https://x.com/fed3c3sa" target="_blank" rel="me noopener"><svg class="i"><use href="#i-x"/></svg><span class="k">X</span><span class="v">@fed3c3sa</span></a></li>
+            <li><a href="https://medium.com/@mail.fede.cesarini" target="_blank" rel="me noopener"><svg class="i"><use href="#i-medium"/></svg><span class="k">Medium</span><span class="v">@mail.fede.cesarini</span></a></li>
+            <li><a href="assets/Federico_Cesarini_AI_Engineer_CV_2026.pdf"><svg class="i"><use href="#i-file"/></svg><span class="k">CV</span><span class="v">PDF, 3 pages</span></a></li>
+          </ul>
         </div>
-    </section>
+      </section>
 
-    <!-- ════ EDUCATION ════ -->
-    <section id="education">
-        <div class="container">
-            <div class="section-label rv">Education</div>
-            <div class="edu-card rv">
-                <div class="exp-top">
-                    <div>
-                        <div class="exp-role">B.Sc. Computer Engineering</div>
-                        <div class="exp-company">Universita degli studi di Bergamo</div>
-                    </div>
-                    <div class="exp-date">Sep 2017 - Aug 2021</div>
-                </div>
-            </div>
-            <div class="lang-tags rv">
-                <span class="tag" style="font-size:.85rem;padding:.4rem 1rem"><b>Italian</b> (Native)</span>
-                <span class="tag" style="font-size:.85rem;padding:.4rem 1rem"><b>English</b> (C1)</span>
-            </div>
-        </div>
-    </section>
+    </div>
+  </main>
 
-    <!-- ════ CONTACT ════ -->
-    <section id="contact" class="alt-bg">
-        <div class="container contact-wrap">
-            <div class="section-label rv">Contact</div>
-            <h2 class="section-title rv">Let's work together</h2>
-            <p class="section-desc rv" style="margin-left:auto;margin-right:auto">Interested in AI engineering, cloud
-                architecture, or the latest in LLMs? Reach out.</p>
+  <footer>
+    <div class="wrap foot">
+      <span>© 2026 Federico Cesarini · Bergamo, Italy</span>
+      <span><a href="https://secondbrainmemory.com/" target="_blank" rel="noopener">SecondBrain</a> · <a href="https://github.com/crow-hq" target="_blank" rel="noopener">CROW</a> · <a href="#top">Back to the top</a></span>
+    </div>
+  </footer>
 
-            <div class="contact-grid rv">
-                <a href="mailto:mail.fede.cesarini@gmail.com" class="contact-card">
-                    <div class="ic em"><i class="fas fa-envelope"></i></div>
-                    <span>mail.fede.cesarini@gmail.com</span>
-                </a>
-                <a href="tel:+393920891327" class="contact-card">
-                    <div class="ic ph"><i class="fas fa-phone"></i></div>
-                    <span>+39 392 089 1327</span>
-                </a>
-                <a href="https://linkedin.com/in/federico-cesarini-1aa0b91b1" target="_blank" class="contact-card">
-                    <div class="ic li"><i class="fab fa-linkedin-in"></i></div>
-                    <span>LinkedIn</span>
-                </a>
-                <a href="https://github.com/federicocesarini" target="_blank" class="contact-card">
-                    <div class="ic gh"><i class="fab fa-github"></i></div>
-                    <span>GitHub</span>
-                </a>
-                <a href="https://medium.com/@mail.fede.cesarini" target="_blank" class="contact-card">
-                    <div class="ic md"><i class="fab fa-medium"></i></div>
-                    <span>Medium</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ════ FOOTER ════ -->
-    <footer>
-        <div class="foot-links">
-            <a href="https://linkedin.com/in/federico-cesarini-1aa0b91b1" target="_blank"><i
-                    class="fab fa-linkedin-in"></i></a>
-            <a href="https://github.com/federicocesarini" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://medium.com/@mail.fede.cesarini" target="_blank"><i class="fab fa-medium"></i></a>
-            <a href="mailto:mail.fede.cesarini@gmail.com"><i class="fas fa-envelope"></i></a>
-        </div>
-        <p>&copy; 2026 Federico Cesarini</p>
-    </footer>
-
-    <script>
-        // Nav scroll
-        const nav = document.getElementById('nav');
-        window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
-
-        // Burger
-        document.getElementById('burger').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
-        document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.addEventListener('click', function (e) { e.preventDefault(); const t = document.querySelector(this.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }) });
-        });
-
-        // Scroll reveal
-        const io = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target) } }) }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
-        document.querySelectorAll('.rv').forEach(el => io.observe(el));
-
-        // Parallax orbs on mouse
-        document.addEventListener('mousemove', e => {
-            const x = (e.clientX / innerWidth - .5) * 2, y = (e.clientY / innerHeight - .5) * 2;
-            document.querySelectorAll('.orb').forEach((o, i) => {
-                const s = [15, 10, 8][i] || 10;
-                o.style.transform = `translate(${x * s}px,${y * s}px)`;
-            });
-        });
-    </script>
+  <script src="assets/brain.js" defer></script>
+  <script src="assets/site.js" defer></script>
 </body>
-
 </html>
