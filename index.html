@@ -863,7 +863,7 @@
             </div>
             <div class="prose crow-prose">
               <p>In an LLM wiki, a language model files documents into a tree of notes and answers questions from them, but every small decision, such as where a document belongs or which note to read, costs a model call. CROW hands those decisions to a fast, cheap classifier and keeps the language model only for writing.</p>
-              <p>On 525 real documents, compared with the same pipeline driven by a language model, CROW added documents at half the cost and in half the time (18 s instead of 39 s each), and found the right note for a question 89% of the time instead of 62%, about twice as fast.</p>
+              <p>On 2,019 real documents in eleven collections, compared with the same pipeline driven by a language model, CROW added documents 1.6 times as fast (18 s instead of 29 s each), with 63% fewer LLM tokens and at 0.59 times the cost with the writer at list price, and found the right note for a question 99.5% of the time instead of 79%.</p>
             </div>
 
             <figure class="bench" aria-labelledby="bench-title">
@@ -874,25 +874,25 @@
               <div class="metric">
                 <p class="metric-name">Right note read <small>higher is better</small></p>
                 <div class="bars">
-                  <div class="bar crow"><span>CROW</span><span class="track"><i class="fill" style="--w:89%"></i></span><b>89%</b></div>
-                  <div class="bar base"><span>LLM only</span><span class="track"><i class="fill" style="--w:62%"></i></span><b>62%</b></div>
+                  <div class="bar crow"><span>CROW</span><span class="track"><i class="fill" style="--w:99.5%"></i></span><b>99.5%</b></div>
+                  <div class="bar base"><span>LLM only</span><span class="track"><i class="fill" style="--w:79.4%"></i></span><b>79.4%</b></div>
                 </div>
               </div>
               <div class="metric">
                 <p class="metric-name">Time to add a document <small>lower is better</small></p>
                 <div class="bars">
-                  <div class="bar crow"><span>CROW</span><span class="track"><i class="fill" style="--w:47.7%"></i></span><b>18.4 s</b></div>
-                  <div class="bar base"><span>LLM only</span><span class="track"><i class="fill" style="--w:100%"></i></span><b>38.6 s</b></div>
+                  <div class="bar crow"><span>CROW</span><span class="track"><i class="fill" style="--w:61.6%"></i></span><b>18.0 s</b></div>
+                  <div class="bar base"><span>LLM only</span><span class="track"><i class="fill" style="--w:100%"></i></span><b>29.2 s</b></div>
                 </div>
               </div>
               <div class="metric">
                 <p class="metric-name">LLM tokens to add a document <small>lower is better</small></p>
                 <div class="bars">
-                  <div class="bar crow"><span>CROW</span><span class="track"><i class="fill" style="--w:31.8%"></i></span><b>5,508</b></div>
-                  <div class="bar base"><span>LLM only</span><span class="track"><i class="fill" style="--w:100%"></i></span><b>17,324</b></div>
+                  <div class="bar crow"><span>CROW</span><span class="track"><i class="fill" style="--w:36.8%"></i></span><b>4,861</b></div>
+                  <div class="bar base"><span>LLM only</span><span class="track"><i class="fill" style="--w:100%"></i></span><b>13,227</b></div>
                 </div>
               </div>
-              <p class="bench-note">From the CROW paper and the llm-wiki-v2 benchmark: 2.1× faster and 68% fewer LLM tokens per document.</p>
+              <p class="bench-note">From the llm-wiki-v2 1.0.0 benchmark (eleven corpora, 2,019 documents, 656 questions): 1.6× faster and 63% fewer LLM tokens per document.</p>
             </figure>
 
             <div class="prose">
