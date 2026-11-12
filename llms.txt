@@ -19,6 +19,7 @@
 - [Website](https://www.federicocesarini.com/)
 - [CV (PDF)](https://www.federicocesarini.com/assets/Federico_Cesarini_AI_Engineer_CV_2026.pdf)
 - [CROW paper](https://doi.org/10.5281/zenodo.23260209)
+- [Crow and llm-wiki-v2 website](https://crowllmwiki.com/)
 - [llm-wiki-v2 on GitHub](https://github.com/crow-hq/llm-wiki-v2)
 - [Crow desktop app](https://github.com/crow-hq/crow-desktop)
 - [llmwiki2 on PyPI](https://pypi.org/project/llmwiki2/)
@@ -32,3 +33,4 @@
 - [GitHub](https://github.com/fed3c3sa)
 - [X](https://x.com/fed3c3sa)
 - [Medium](https://medium.com/@mail.fede.cesarini)
+- [App Store developer page](https://apps.apple.com/us/developer/federico-cesarini/id1888767256)
